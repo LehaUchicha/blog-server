@@ -2,6 +2,7 @@ package ru.alexproject.blogserver.model;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,9 +14,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Entity
+@Table(name="posts")
 public class Post {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String title;
     private String text;
 }
