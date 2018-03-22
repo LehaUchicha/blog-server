@@ -1,7 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.Post;
 
 import java.util.ArrayList;
@@ -14,13 +14,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class PostController {
 
-   // private List<Post> posts = new ArrayList<>({});
+    ArrayList<Post> posts = new ArrayList<Post>(
+            Arrays.asList(new Post("1", "title 1", "asdfasdfasdf"),
+                    new Post("2", "title 2", "asdfffffffffffffffffffff"),
+                    new Post("3", "title 3", "ttteeeexxxtttt")));
 
-
-    @RequestMapping("/posts")
+    @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public List<Post> getPosts(){
-        return Arrays.asList(new Post(1l, "title 1", "asdfasdfasdf"), new Post(2l, "title 2", "asdfffffffffffffffffffff"), new Post(3l, "title 3", "ttteeeexxxtttt"));
+        return posts;
     }
+
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    public void createPost(@RequestBody Post post){
+        posts.add(post);
+    }
+
+    @RequestMapping(value = "/post", method = RequestMethod.DELETE)
+    public void deletePost(@RequestBody Post post){
+        posts.remove(post);
+    }
+
 }

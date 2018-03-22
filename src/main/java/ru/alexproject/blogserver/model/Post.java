@@ -1,8 +1,8 @@
 package ru.alexproject.blogserver.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * Created by Alex on 21.03.2018.
@@ -11,9 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Post {
 
-    private Long id;
+    private String id;
     private String title;
     private String text;
 }
