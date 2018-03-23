@@ -15,11 +15,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
+@ToString
 @Table(name="posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
     private String title;
     private String text;

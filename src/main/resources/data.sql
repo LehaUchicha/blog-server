@@ -1,1 +1,1 @@
-INSERT INTO posts (id, title, text) VALUES (1, 'Spring Boot - Spring Data JPA with Hibernate and H2 Web Console', 'Curret tecknologies are developed very fast. It difficult to controll all technologies')
+INSERT INTO posts VALUES (0 ,'Spring Boot - Spring Data JPA with Hibernate and H2 Web Console', 'Curret tecknologies are developed very fast. It difficult to controll all technologies')

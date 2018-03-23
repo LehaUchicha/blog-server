@@ -16,28 +16,39 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 @CrossOrigin
 public class PostController {
 
     @Autowired
     private PostRepository postRepository;
 
-    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Post getPostById(@PathVariable("id") Long id){
+        return postRepository.findById(id).get();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
     public List<Post> getPosts(){
         return postRepository.findAll();
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void createPost(@RequestBody Post post){
-        log.debug("created post: {}", post);
+        System.out.println("created post: {}" + post);
         postRepository.saveAndFlush(post);
         //postRepository.save(post);
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.DELETE)
-    public void deletePost(@RequestBody Post post){
-        postRepository.delete(post);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deletePost(@PathVariable("id") Long id){
+        postRepository.deleteById(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void updatePost(@RequestBody Post post){
+        postRepository.save(post);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + post);
     }
 
 }
