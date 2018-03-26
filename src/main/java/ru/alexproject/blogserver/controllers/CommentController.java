@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/comments")
+@CrossOrigin
 public class CommentController {
 
     @Autowired
@@ -21,23 +22,23 @@ public class CommentController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Comment> getPosts(){
+    public List<Comment> getComments(){
         return commentRepository.findAll();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createPost(@RequestBody Comment post){
-        System.out.println("created post: {}" + post);
-        commentRepository.saveAndFlush(post);
+    public void createComment(@RequestBody Comment comment){
+        System.out.println("created comment: {}" + comment);
+        commentRepository.saveAndFlush(comment);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deletePost(@PathVariable("id") Long id){
+    public void deleteComment(@PathVariable("id") Long id){
         commentRepository.deleteById(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updatePost(@RequestBody Comment post){
+    public void updateComment(@RequestBody Comment post){
         commentRepository.save(post);
     }
 

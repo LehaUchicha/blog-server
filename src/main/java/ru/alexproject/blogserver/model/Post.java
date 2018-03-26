@@ -26,9 +26,9 @@ public class Post {
 
     @Column(name = "title")
     private String title;
-    @Column(name = "shortText")
+    @Column(name = "shortText", length = 500)
     private String shortText;
-    @Column(name = "fullText")
+    @Column(name = "fullText", length = 10000)
     private String fullText;
     @Column(name = "likes")
     private Integer likes;
