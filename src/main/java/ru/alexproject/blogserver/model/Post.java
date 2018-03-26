@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Alex on 21.03.2018.
@@ -21,8 +22,17 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+
+    @Column(name = "title")
     private String title;
-    private String text;
+    @Column(name = "shortText")
+    private String shortText;
+    @Column(name = "fullText")
+    private String fullText;
+    @Column(name = "likes")
+    private Integer likes;
+
+    @OneToMany
+    private List<Comment> comments;
 }
