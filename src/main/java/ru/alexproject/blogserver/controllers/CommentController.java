@@ -18,7 +18,7 @@ public class CommentController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Comment getPostById(@PathVariable("id") Long id){
-        return commentRepository.findById(id).get();
+        return commentRepository.findOne(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -34,7 +34,7 @@ public class CommentController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteComment(@PathVariable("id") Long id){
-        commentRepository.deleteById(id);
+        commentRepository.delete(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

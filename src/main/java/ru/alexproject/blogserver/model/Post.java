@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @ToString
+@Entity
 @Table(name="posts")
 public class Post {
 

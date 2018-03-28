@@ -3,6 +3,7 @@ package ru.alexproject.blogserver.controllers;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.Comment;
 import ru.alexproject.blogserver.model.Post;
@@ -31,7 +32,7 @@ public class PostController {
 
     @RequestMapping(value = "post/{id}", method = RequestMethod.GET)
     public Post getPostById(@PathVariable("id") Long id){
-        return postRepository.findById(id).get();
+        return postRepository.findOne(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -48,7 +49,7 @@ public class PostController {
 
     @RequestMapping(value = "post/{id}", method = RequestMethod.DELETE)
     public void deletePost(@PathVariable("id") Long id){
-        postRepository.deleteById(id);
+        postRepository.delete(id);
     }
 
     @RequestMapping(value = "post/{id}", method = RequestMethod.PUT)
