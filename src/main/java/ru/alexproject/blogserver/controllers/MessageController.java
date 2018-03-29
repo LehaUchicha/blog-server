@@ -10,8 +10,10 @@ import ru.alexproject.blogserver.repositories.MessageRepository;
 
 import java.util.List;
 
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.API_MESSAGES;
+
 @RestController
-@RequestMapping("/api/messages")
+@RequestMapping(API_MESSAGES)
 @CrossOrigin
 public class MessageController {
 
@@ -23,4 +25,8 @@ public class MessageController {
         return messageRepository.findAll();
     }
 
+//    @RequestMapping(method = RequestMethod.GET)
+//    public List<Message> getdAllMessages(){
+//        return messageRepository.findAll();
+//    }
 }

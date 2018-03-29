@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+
 @Entity
 @Table(name="posts")
 public class Post {

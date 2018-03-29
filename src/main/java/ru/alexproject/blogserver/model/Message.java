@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+
 @Entity
 @Table(name="messages")
 public class Message {

@@ -8,15 +8,18 @@ import ru.alexproject.blogserver.repositories.CommentRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Comments.API_COMMENTS;
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Common.ID;
+
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping(API_COMMENTS)
 @CrossOrigin
 public class CommentController {
 
     @Autowired
     private CommentRepository commentRepository;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = ID, method = RequestMethod.GET)
     public Comment getPostById(@PathVariable("id") Long id){
         return commentRepository.findOne(id);
     }
@@ -32,14 +35,13 @@ public class CommentController {
         commentRepository.saveAndFlush(comment);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = ID, method = RequestMethod.DELETE)
     public void deleteComment(@PathVariable("id") Long id){
         commentRepository.delete(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = ID, method = RequestMethod.PUT)
     public void updateComment(@RequestBody Comment post){
         commentRepository.save(post);
     }
-
 }

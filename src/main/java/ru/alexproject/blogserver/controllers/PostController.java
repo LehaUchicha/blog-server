@@ -15,12 +15,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.API_POSTS;
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID;
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID_COMMENTS;
+
 /**
  * Created by Alex on 21.03.2018.
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping(API_POSTS)
 @CrossOrigin
 public class PostController {
 
@@ -30,7 +34,7 @@ public class PostController {
     @Autowired
     private CommentRepository commentRepository;
 
-    @RequestMapping(value = "post/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = POST_ID, method = RequestMethod.GET)
     public Post getPostById(@PathVariable("id") Long id){
         return postRepository.findOne(id);
     }
@@ -47,18 +51,18 @@ public class PostController {
         //postRepository.save(post);
     }
 
-    @RequestMapping(value = "post/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = POST_ID, method = RequestMethod.DELETE)
     public void deletePost(@PathVariable("id") Long id){
         postRepository.delete(id);
     }
 
-    @RequestMapping(value = "post/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = POST_ID, method = RequestMethod.PUT)
     public void updatePost(@RequestBody Post post){
         postRepository.save(post);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + post);
     }
 
-    @RequestMapping(value = "post/{id}/comments", method = RequestMethod.GET)
+    @RequestMapping(value = POST_ID_COMMENTS, method = RequestMethod.GET)
     public List<Comment> getCommentsByPostId(@PathVariable("id") Long id){
         return commentRepository.findAll().stream().filter(comment -> id.equals(comment.getPost().getId())).collect(Collectors.toList());
     }

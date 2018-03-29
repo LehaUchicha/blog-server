@@ -7,13 +7,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.User;
 import ru.alexproject.blogserver.repositories.UserRepository;
+import ru.alexproject.blogserver.utils.RestApiEndpoints;
 
 import javax.servlet.ServletException;
 import java.util.Date;
 import java.util.List;
 
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Users.API_USERS;
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Users.REGISTRATION;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(API_USERS)
 @CrossOrigin
 public class UserController {
 
@@ -28,40 +32,10 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = REGISTRATION, method = RequestMethod.POST)
     public void register(@RequestBody User user) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String login(@RequestBody User user) throws ServletException {
-//
-//        String jwtToken = "";
-//
-//        if (user.getLogin() == null || user.getPassword() == null) {
-//            throw new ServletException("Please fill in username and password");
-//        }
-//
-//        String login = user.getLogin();
-//        String password = user.getPassword();
-//
-//        User requestUser = userRepository.findByUsername(login);
-//
-//        if (user == null) {
-//            throw new ServletException("User email not found.");
-//        }
-//
-//        String pwd = requestUser.getPassword();
-//
-//        if (!password.equals(pwd)) {
-//            throw new ServletException("Invalid login. Please check your name and password.");
-//        }
-//
-//        jwtToken = Jwts.builder().setSubject(login).claim("roles", "user").setIssuedAt(new Date())
-//                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-//
-//        return jwtToken;
-//    }
 }
