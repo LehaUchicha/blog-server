@@ -1,16 +1,10 @@
 package ru.alexproject.blogserver.controllers;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.User;
 import ru.alexproject.blogserver.repositories.UserRepository;
-import ru.alexproject.blogserver.utils.RestApiEndpoints;
-
-import javax.servlet.ServletException;
-import java.util.Date;
 import java.util.List;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Users.API_USERS;
@@ -37,5 +31,4 @@ public class UserController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
-
 }

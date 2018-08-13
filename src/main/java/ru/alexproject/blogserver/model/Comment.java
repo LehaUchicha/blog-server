@@ -4,13 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
-@ToString
-
+@Data
 @Entity
 @Table(name="comments")
 public class Comment {

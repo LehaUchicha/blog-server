@@ -6,7 +6,6 @@ import ru.alexproject.blogserver.model.Comment;
 import ru.alexproject.blogserver.repositories.CommentRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Comments.API_COMMENTS;
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Common.ID;
