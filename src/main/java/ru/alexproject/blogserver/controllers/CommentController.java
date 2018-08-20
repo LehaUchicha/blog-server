@@ -18,29 +18,33 @@ public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
 
-    @RequestMapping(value = ID, method = RequestMethod.GET)
-    public Comment getPostById(@PathVariable("id") Long id){
-        return commentRepository.findOne(id);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Comment> getComments(){
+    @GetMapping
+    public List<Comment> getComments() {
         return commentRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public void createComment(@RequestBody Comment comment){
+    @GetMapping(value = ID)
+    public Comment getPostById(@PathVariable("id") Long id) {
+        return commentRepository.findOne(id);
+    }
+
+    @PostMapping
+    public void createComment(@RequestBody Comment comment) {
         System.out.println("created comment: {}" + comment);
-        commentRepository.saveAndFlush(comment);
+        commentRepository.save(comment);
     }
 
-    @RequestMapping(value = ID, method = RequestMethod.DELETE)
-    public void deleteComment(@PathVariable("id") Long id){
+    @PutMapping(value = ID)
+    public void updateComment(@PathVariable("id") Long id, @RequestBody Comment post) {
+        Comment comment = commentRepository.findOne(id);
+        comment.setAuthor(post.getAuthor());
+        comment.setPost(post.getPost());
+        comment.setText(post.getText());
+        commentRepository.save(comment);
+    }
+
+    @DeleteMapping(value = ID)
+    public void deleteComment(@PathVariable("id") Long id) {
         commentRepository.delete(id);
-    }
-
-    @RequestMapping(value = ID, method = RequestMethod.PUT)
-    public void updateComment(@RequestBody Comment post){
-        commentRepository.save(post);
     }
 }

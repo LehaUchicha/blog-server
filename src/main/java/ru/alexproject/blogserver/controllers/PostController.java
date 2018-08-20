@@ -30,44 +30,40 @@ public class PostController {
     @Autowired
     private CommentRepository commentRepository;
 
-    @RequestMapping(value = POST_ID, method = RequestMethod.GET)
+    @GetMapping(value = POST_ID)
     public Post getPostById(@PathVariable("id") Long id){
         return postRepository.findOne(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<Post> getPosts(){
         return postRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public void createPost(@RequestBody Post post){
         System.out.println("created post: {}" + post);
-        postRepository.saveAndFlush(post);
-        //postRepository.save(post);
+        //postRepository.saveAndFlush(post);
+        postRepository.save(post);
     }
 
-    @RequestMapping(value = POST_ID, method = RequestMethod.DELETE)
+    @PutMapping(value = POST_ID)
+    public void updatePost(@PathVariable("id") Long id, @RequestBody Post post){
+        Post p = postRepository.getOne(id);
+        p.setTitle(post.getTitle());
+        p.setShortText(post.getShortText());
+        p.setFullText(post.getFullText());
+        postRepository.save(p);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + p);
+    }
+
+    @DeleteMapping(value = POST_ID)
     public void deletePost(@PathVariable("id") Long id){
         postRepository.delete(id);
     }
 
-    @RequestMapping(value = POST_ID, method = RequestMethod.PUT)
-    public void updatePost(@RequestBody Post post){
-        postRepository.save(post);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + post);
-    }
-
-    @RequestMapping(value = POST_ID_COMMENTS, method = RequestMethod.GET)
+    @GetMapping(value = POST_ID_COMMENTS)
     public List<Comment> getCommentsByPostId(@PathVariable("id") Long id){
         return commentRepository.findAll().stream().filter(comment -> id.equals(comment.getPost().getId())).collect(Collectors.toList());
     }
-
-//    @RequestMapping(value = "post/{id}", method = RequestMethod.GET)
-//    public Post increaseLikeCount(@PathVariable("id") Long id){
-//        return postRepository.findById(id).get();
-//    }
-
-
-
 }

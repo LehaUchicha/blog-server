@@ -1,17 +1,15 @@
 package ru.alexproject.blogserver.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
@@ -32,16 +30,94 @@ public class User implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    /**
-     * Roles are being eagerly loaded here because
-     * they are a fairly small collection of items for this example.
-     */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JsonManagedReference
     private Set<Role> roles;
 
-    @OneToMany
-    private List<Message> messages;
+    @OneToMany(mappedBy = "fromId")
+    @JsonManagedReference
+    private Set<Message> sendMessages;
+
+    @OneToMany(mappedBy = "toId")
+    @JsonManagedReference
+    private Set<Message> receiveMessages;
+
+    @OneToMany(mappedBy = "author")
+    @JsonManagedReference
+    private Set<Comment> comments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Message> getSendMessages() {
+        return sendMessages;
+    }
+
+    public void setSendMessages(Set<Message> sendMessages) {
+        this.sendMessages = sendMessages;
+    }
+
+    public Set<Message> getReceiveMessages() {
+        return receiveMessages;
+    }
+
+    public void setReceiveMessages(Set<Message> receiveMessages) {
+        this.receiveMessages = receiveMessages;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 }

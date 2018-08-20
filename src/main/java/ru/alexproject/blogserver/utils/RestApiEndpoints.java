@@ -8,6 +8,7 @@ public final class RestApiEndpoints {
 
     public class Messages{
         public static final String API_MESSAGES = "/api/messages";
+        public static final String MESSAGE_ID = "/message/{id}";
     }
 
     public static class Users{

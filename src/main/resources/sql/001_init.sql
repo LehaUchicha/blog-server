@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS "posts" CASCADE;
 DROP SEQUENCE IF EXISTS "post_seq" CASCADE;
-CREATE SEQUENCE "post_seq" ЫЕФКЕ 100000;
+CREATE SEQUENCE "post_seq" start 100000;
 
 CREATE TABLE "posts"{
    "id" BIGINT PRIMARY KEY DEFAULT "nextval"('"post_seq'),

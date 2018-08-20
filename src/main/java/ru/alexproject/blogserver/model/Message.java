@@ -1,11 +1,9 @@
 package ru.alexproject.blogserver.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
-
-@Data
 @Entity
 @Table(name="messages")
 public class Message {
@@ -14,11 +12,48 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    private User from_user_fk_id;
-
-    @ManyToOne
-    private User to_user_fk_id;
-
+    @Column(name = "text")
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "from_id")
+    @JsonBackReference
+    private User fromId;
+
+    @ManyToOne
+    @JoinColumn(name = "to_id")
+    @JsonBackReference
+    private User toId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public User getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(User fromId) {
+        this.fromId = fromId;
+    }
+
+    public User getToId() {
+        return toId;
+    }
+
+    public void setToId(User toId) {
+        this.toId = toId;
+    }
 }
