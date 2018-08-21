@@ -26,9 +26,6 @@ public class Post {
     @Column(name = "fullText", length = 10000)
     private String fullText;
 
-    @Column(name = "likes")
-    private Integer likes;
-
     @OneToMany
     @JoinColumn
     private List<Comment> comments;
@@ -63,14 +60,6 @@ public class Post {
 
     public void setFullText(String fullText) {
         this.fullText = fullText;
-    }
-
-    public Integer getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Integer likes) {
-        this.likes = likes;
     }
 
     public List<Comment> getComments() {

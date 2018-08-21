@@ -37,13 +37,9 @@ public class User implements Serializable {
     @JsonManagedReference
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "fromId")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<Message> sendMessages;
-
-    @OneToMany(mappedBy = "toId")
-    @JsonManagedReference
-    private Set<Message> receiveMessages;
+    private Set<UserDialog> dialogs;
 
     @OneToMany(mappedBy = "author")
     @JsonManagedReference
@@ -97,27 +93,19 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    public Set<Message> getSendMessages() {
-        return sendMessages;
-    }
-
-    public void setSendMessages(Set<Message> sendMessages) {
-        this.sendMessages = sendMessages;
-    }
-
-    public Set<Message> getReceiveMessages() {
-        return receiveMessages;
-    }
-
-    public void setReceiveMessages(Set<Message> receiveMessages) {
-        this.receiveMessages = receiveMessages;
-    }
-
     public Set<Comment> getComments() {
         return comments;
     }
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<UserDialog> getDialogs() {
+        return dialogs;
+    }
+
+    public void setDialogs(Set<UserDialog> dialogs) {
+        this.dialogs = dialogs;
     }
 }
