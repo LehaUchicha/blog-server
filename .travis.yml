@@ -13,4 +13,8 @@ addons:
 
 script:
 - ./mvnw clean install -B
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+- ./mvnw sonar:sonar
+      -Dsonar.projectKey=LehaUchicha_blog-server
+      -Dsonar.organization=lehauchicha-github
+      -Dsonar.host.url=https://sonarcloud.io
+      -Dsonar.login=bdff98e6ccecb9072790807739d0f7fa6eff3ea4
