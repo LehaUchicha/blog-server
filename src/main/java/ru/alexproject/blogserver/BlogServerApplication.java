@@ -23,9 +23,4 @@ public class BlogServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BlogServerApplication.class, args);
 	}
-
-//	@Autowired
-//	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository repo) throws Exception {
-//		builder.userDetailsService(s -> new CustomUserDetails(repo.findByUsername(s)));
-//	}
 }
