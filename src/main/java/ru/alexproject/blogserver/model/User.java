@@ -12,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "users")
 public class User implements Serializable {
 
+    public User() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -108,4 +111,6 @@ public class User implements Serializable {
     public void setDialogs(Set<UserDialog> dialogs) {
         this.dialogs = dialogs;
     }
+
+
 }

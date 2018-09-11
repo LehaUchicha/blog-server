@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.Comment;
 import ru.alexproject.blogserver.model.Post;
 import ru.alexproject.blogserver.repositories.CommentRepository;
-import ru.alexproject.blogserver.repositories.PostRepository;
+import ru.alexproject.blogserver.services.PostService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,41 +26,43 @@ import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID_COM
 public class PostController {
 
     @Autowired
-    private PostRepository postRepository;
+    private PostService postService;
 
     @Autowired
     private CommentRepository commentRepository;
 
     @GetMapping(value = POST_ID)
     public Post getPostById(@PathVariable("id") Long id){
-        return postRepository.findOne(id);
+        return postService.getPostById(id);
     }
 
     @GetMapping
     public List<Post> getPosts(){
-        return postRepository.findAll();
+        List<Post> posts = new ArrayList<>();
+        postService.getPosts().forEach(p -> posts.add(p));
+        return posts;
     }
 
     @PostMapping
     public void createPost(@RequestBody Post post){
         System.out.println("created post: {}" + post);
-        //postRepository.saveAndFlush(post);
-        postRepository.save(post);
+        //postService.saveAndFlush(post);
+        postService.createPost(post);
     }
 
     @PutMapping(value = POST_ID)
     public void updatePost(@PathVariable("id") Long id, @RequestBody Post post){
-        Post p = postRepository.getOne(id);
+        Post p = postService.getPostById(id);
         p.setTitle(post.getTitle());
         p.setShortText(post.getShortText());
         p.setFullText(post.getFullText());
-        postRepository.save(p);
+        postService.save(p);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + p);
     }
 
     @DeleteMapping(value = POST_ID)
     public void deletePost(@PathVariable("id") Long id){
-        postRepository.delete(id);
+        postService.deletePost(id);
     }
 
     @GetMapping(value = POST_ID_COMMENTS)

@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
@@ -31,7 +32,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private String scopeRead;
 
     @Value("${security.jwt.scope-write}")
-    private String scopeWrite = "write";
+    private String scopeWrite;
+
+    @Value("${security.jwt.scope-trust}")
+    private String scopeTrust;
 
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
@@ -52,18 +56,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient(clientId)
                 .secret(clientSecret)
                 .authorizedGrantTypes(grantType)
-                .scopes(scopeRead, scopeWrite)
+                .scopes(scopeRead, scopeWrite, scopeTrust)
                 .resourceIds(resourceIds);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
-        endpoints.tokenStore(tokenStore)
-                .accessTokenConverter(accessTokenConverter)
-                .tokenEnhancer(enhancerChain)
-                .authenticationManager(authenticationManager);
+        endpoints.authenticationManager(authenticationManager);
+//        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+//        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
+//        endpoints.tokenStore(tokenStore)
+//                .accessTokenConverter(accessTokenConverter)
+//                .tokenEnhancer(enhancerChain)
+//                .authenticationManager(authenticationManager);
     }
 
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.checkTokenAccess("isAuthenticated()");
+    }
 }

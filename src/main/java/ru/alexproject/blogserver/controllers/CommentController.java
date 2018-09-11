@@ -6,6 +6,7 @@ import ru.alexproject.blogserver.model.Comment;
 import ru.alexproject.blogserver.repositories.CommentRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Comments.API_COMMENTS;
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Common.ID;
@@ -35,16 +36,22 @@ public class CommentController {
     }
 
     @PutMapping(value = ID)
-    public void updateComment(@PathVariable("id") Long id, @RequestBody Comment post) {
+    public void updateComment(@PathVariable("id") Long id, @RequestBody Comment requestComment) {
         Comment comment = commentRepository.findOne(id);
-        comment.setAuthor(post.getAuthor());
-        comment.setPost(post.getPost());
-        comment.setText(post.getText());
+        comment.setPost(requestComment.getPost())
+               .setAuthor(requestComment.getAuthor())
+               .setText(requestComment.getText());
         commentRepository.save(comment);
     }
 
     @DeleteMapping(value = ID)
     public void deleteComment(@PathVariable("id") Long id) {
         commentRepository.delete(id);
+    }
+
+    public List<Comment> getCommentsByPostId(Long id) {
+        return commentRepository.findAll().stream()
+                .filter(comment -> id.equals(comment.getPost().getId()))
+                .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,5 @@ import ru.alexproject.blogserver.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("select u from User u where u.username = ?1")
-    User findByUsername(String login);
+    User findByUsername(String uername);
 }

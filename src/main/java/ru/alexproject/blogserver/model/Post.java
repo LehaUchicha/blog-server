@@ -27,7 +27,6 @@ public class Post {
     private String fullText;
 
     @OneToMany
-    @JoinColumn
     private List<Comment> comments;
 
     public Long getId() {

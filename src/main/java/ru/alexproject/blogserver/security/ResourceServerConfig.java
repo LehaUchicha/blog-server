@@ -18,10 +18,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
 
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId(resourceIds).tokenServices(tokenServices);
-    }
+//    @Override
+//    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+//        resources.resourceId(resourceIds).tokenServices(tokenServices);
+//    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

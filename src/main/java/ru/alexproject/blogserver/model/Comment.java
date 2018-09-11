@@ -1,10 +1,11 @@
 package ru.alexproject.blogserver.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Builder;
 
 import javax.persistence.*;
 import java.util.Set;
-
+@Builder
 @Entity
 @Table(name="comments")
 public class Comment {
@@ -39,23 +40,26 @@ public class Comment {
         return text;
     }
 
-    public void setText(String text) {
+    public Comment setText(String text) {
         this.text = text;
+        return this;
     }
 
     public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public Comment setAuthor(User author) {
         this.author = author;
+        return this;
     }
 
     public Post getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public Comment setPost(Post post) {
         this.post = post;
+        return this;
     }
 }

@@ -1,7 +1,7 @@
 package ru.alexproject.blogserver.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import ru.alexproject.blogserver.model.Post;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 }
