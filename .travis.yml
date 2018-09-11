@@ -1,5 +1,16 @@
 language: java
 jdk: oraclejdk8
 
+env:
+  global:
+  - secure: "bdff98e6ccecb9072790807739d0f7fa6eff3ea4"
+
+addons:
+  sonarcloud:
+    organization: "lehauchicha-github"
+    token:
+      secure: $SONAR_TOKEN
+
 script:
 - ./mvnw clean install -B
+- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
