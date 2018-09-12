@@ -12,13 +12,13 @@ public class UserDialog {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonBackReference
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "dialog_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dialog_id", referencedColumnName = "id")
     @JsonBackReference
     private Dialog dialog;
 

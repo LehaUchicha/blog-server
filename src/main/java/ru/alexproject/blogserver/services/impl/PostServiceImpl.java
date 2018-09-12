@@ -2,19 +2,12 @@ package ru.alexproject.blogserver.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.Comment;
 import ru.alexproject.blogserver.model.Post;
-import ru.alexproject.blogserver.repositories.CommentRepository;
 import ru.alexproject.blogserver.repositories.PostRepository;
 import ru.alexproject.blogserver.services.PostService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID;
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID_COMMENTS;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -35,13 +28,6 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = new ArrayList<>();
         postRepository.findAll().forEach(p -> posts.add(p));
         return posts;
-    }
-
-    @Override
-    public void createPost(Post post){
-        System.out.println("created post: {}" + post);
-        //postRepository.saveAndFlush(post);
-        postRepository.save(post);
     }
 
     @Override

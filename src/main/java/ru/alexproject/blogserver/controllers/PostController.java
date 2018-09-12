@@ -8,13 +8,10 @@ import ru.alexproject.blogserver.model.Post;
 import ru.alexproject.blogserver.repositories.CommentRepository;
 import ru.alexproject.blogserver.services.PostService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.API_POSTS;
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID;
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.POST_ID_COMMENTS;
+import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.*;
 
 /**
  * Created by Alex on 21.03.2018.
@@ -32,26 +29,24 @@ public class PostController {
     private CommentRepository commentRepository;
 
     @GetMapping(value = POST_ID)
-    public Post getPostById(@PathVariable("id") Long id){
+    public Post getPostById(@PathVariable("id") Long id) {
         return postService.getPostById(id);
     }
 
     @GetMapping
-    public List<Post> getPosts(){
-        List<Post> posts = new ArrayList<>();
-        postService.getPosts().forEach(p -> posts.add(p));
-        return posts;
+    public List<Post> getPosts() {
+        return postService.getPosts();
     }
 
     @PostMapping
-    public void createPost(@RequestBody Post post){
+    public void createPost(@RequestBody Post post) {
         System.out.println("created post: {}" + post);
         //postService.saveAndFlush(post);
-        postService.createPost(post);
+        postService.save(post);
     }
 
     @PutMapping(value = POST_ID)
-    public void updatePost(@PathVariable("id") Long id, @RequestBody Post post){
+    public void updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
         Post p = postService.getPostById(id);
         p.setTitle(post.getTitle());
         p.setShortText(post.getShortText());
@@ -61,12 +56,12 @@ public class PostController {
     }
 
     @DeleteMapping(value = POST_ID)
-    public void deletePost(@PathVariable("id") Long id){
+    public void deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
     }
 
     @GetMapping(value = POST_ID_COMMENTS)
-    public List<Comment> getCommentsByPostId(@PathVariable("id") Long id){
+    public List<Comment> getCommentsByPostId(@PathVariable("id") Long id) {
         return commentRepository.findAll().stream().filter(comment -> id.equals(comment.getPost().getId())).collect(Collectors.toList());
     }
 }

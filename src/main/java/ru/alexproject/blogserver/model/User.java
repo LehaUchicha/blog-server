@@ -1,12 +1,11 @@
 package ru.alexproject.blogserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -37,7 +36,7 @@ public class User implements Serializable {
     @JsonManagedReference
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<UserDialog> dialogs;
 

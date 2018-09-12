@@ -1,7 +1,5 @@
 package ru.alexproject.blogserver.model;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class Post {
     @Column(name = "full_text", length = 10000)
     private String fullText;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<Comment> comments;
 
     public Long getId() {
