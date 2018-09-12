@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "userdialog")
+@Table(name = "user_dialog")
 public class UserDialog {
 
     @Id
@@ -13,12 +13,12 @@ public class UserDialog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_fk_id")
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "dialog_fk_id")
+    @JoinColumn(name = "dialog_id")
     @JsonBackReference
     private Dialog dialog;
 

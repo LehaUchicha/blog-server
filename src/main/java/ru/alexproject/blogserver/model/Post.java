@@ -26,7 +26,7 @@ public class Post {
     @Column(name = "full_text", length = 10000)
     private String fullText;
 
-    @OneToMany
+    @OneToMany(mappedBy = "id")
     private List<Comment> comments;
 
     public Long getId() {
