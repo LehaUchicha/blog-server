@@ -38,3 +38,7 @@ script:
  # - docker build -t $IMAGE_NAME:$COMMIT .
   #- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
   #- docker push $IMAGE_NAME
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: freelancerkit

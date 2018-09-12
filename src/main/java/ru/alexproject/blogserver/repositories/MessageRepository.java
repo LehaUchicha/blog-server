@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.alexproject.blogserver.model.Message;
 import ru.alexproject.blogserver.model.Post;
 
-public interface MessageRepository extends JpaRepository<Message, Long> {
+public interface MessageRepository {
 }

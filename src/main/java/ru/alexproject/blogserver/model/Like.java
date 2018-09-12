@@ -19,15 +19,15 @@ public class Like {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_fk_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "post_fk_id")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "comment_fk_id")
+    @JoinColumn(name = "comment_id")
     private Comment comment;
 
     public Long getId() {

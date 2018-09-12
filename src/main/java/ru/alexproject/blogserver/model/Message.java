@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name="messages")
+//@Entity
+//@Table(name="messages")
 public class Message {
 
     @Id

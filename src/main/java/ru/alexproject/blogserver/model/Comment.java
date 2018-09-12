@@ -1,11 +1,9 @@
 package ru.alexproject.blogserver.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Builder;
 
 import javax.persistence.*;
-import java.util.Set;
-@Builder
+
 @Entity
 @Table(name="comments")
 public class Comment {
@@ -23,8 +21,8 @@ public class Comment {
     @JsonBackReference
     private User author;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id", referencedColumnName = "id", insertable=false, updatable=false)
     @JsonBackReference
     private Post post;
 

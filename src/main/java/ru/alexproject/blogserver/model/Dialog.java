@@ -16,7 +16,7 @@ public class Dialog {
     @Column(name = "dialog_name")
     private String name;
 
-    @OneToMany(mappedBy = "dialog")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dialog")
     @JsonManagedReference
     private Set<UserDialog> users;
 
