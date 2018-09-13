@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.domain.Comment;
 import ru.alexproject.blogserver.model.dto.PostDto;
@@ -37,7 +38,7 @@ public class PostController {
         return postService.getPosts();
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createPost(@RequestBody PostDto post) {
         postService.save(post);
     }
