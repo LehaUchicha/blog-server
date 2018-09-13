@@ -16,4 +16,6 @@ public interface DialogService {
     Set<DialogDto> getAllDialogsForUser(Long id);
 
     Set<UserDto> getAllUsersForDialog(Long id);
+
+    void save(UserDialogDto userDialogDto);
 }

@@ -47,4 +47,9 @@ public class DialogServiceImpl implements DialogService {
                 .distinct()
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void save(UserDialogDto userDialogDto) {
+        repository.save(userDialogDto.toEntity());
+    }
 }

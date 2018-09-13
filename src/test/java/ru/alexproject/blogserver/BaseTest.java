@@ -5,13 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.alexproject.blogserver.model.dto.CommentDto;
-import ru.alexproject.blogserver.model.dto.PostDto;
-import ru.alexproject.blogserver.model.dto.UserDto;
-import ru.alexproject.blogserver.services.CommentService;
-import ru.alexproject.blogserver.services.LikeService;
-import ru.alexproject.blogserver.services.PostService;
-import ru.alexproject.blogserver.services.UserService;
+import ru.alexproject.blogserver.model.dto.*;
+import ru.alexproject.blogserver.services.*;
 
 import static ru.alexproject.blogserver.model.EntityUtils.newId;
 
@@ -31,6 +26,9 @@ public abstract class BaseTest {
 
     @Autowired
     protected CommentService commentService;
+
+    @Autowired
+    protected DialogService dialogService;
 
     protected PostDto createBasePostDto() {
         return PostDto.build()
@@ -55,6 +53,20 @@ public abstract class BaseTest {
         return CommentDto.build()
                 .withId(newId())
                 .withText("Comment")
+                .please();
+    }
+
+    protected DialogDto createBaseDialog() {
+        return DialogDto.build()
+                .withId(newId())
+                .withName("Best Dialog")
+                .please();
+    }
+
+    protected UserDialogDto createBaseUserDialogDto() {
+        return UserDialogDto.build()
+                .withId(newId())
+                .withText("hello")
                 .please();
     }
 }
