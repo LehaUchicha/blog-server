@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static ru.alexproject.blogserver.model.EntityUtils.newId;
+
 @Service
 public class LikeServiceImpl implements LikeService {
 
@@ -61,6 +63,7 @@ public class LikeServiceImpl implements LikeService {
         if (repository.findLikesByUserAndPost(post.toEntity(), user.toEntity()) == null) {
             repository.save(
                     LikeDto.build()
+                            .setId(newId())
                             .setUser(user.toEntity())
                             .setPost(post.toEntity())
                             .please()
@@ -79,6 +82,7 @@ public class LikeServiceImpl implements LikeService {
         if (repository.findLikesByUserAndComment(commentDto.toEntity(), user.toEntity()) == null) {
             repository.save(
                     LikeDto.build()
+                            .setId(newId())
                             .setUser(user.toEntity())
                             .setComment(commentDto.toEntity())
                             .please()

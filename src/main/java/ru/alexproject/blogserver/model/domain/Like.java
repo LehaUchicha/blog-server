@@ -3,14 +3,14 @@ package ru.alexproject.blogserver.model.domain;
 import ru.alexproject.blogserver.model.dto.LikeDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "likes")
-public class Like {
+public class Like implements Serializable{
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne

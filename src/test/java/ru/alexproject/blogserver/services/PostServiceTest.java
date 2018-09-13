@@ -10,18 +10,18 @@ public class PostServiceTest extends BaseTest {
     @Test
     public void createPost() {
         PostDto post = createBasePostDto();
-        int postCount = postService.getPosts().size();
         postService.save(post);
-        Assert.assertEquals(postCount + 1, postService.getPosts().size());
+        Assert.assertNotNull(postService.getPostById(post.getId()));
     }
 
     @Test
     public void updatePost() {
-        String newTitleValue = "New Title value";
-        PostDto post = postService.getPostById(0l);
-        Assert.assertNotEquals(newTitleValue, post.getTitle());
-        post.setTitle(newTitleValue);
-        postService.updatePost(0l, post);
-        Assert.assertEquals(newTitleValue, postService.getPostById(0l).getTitle());
+        String newTitle = "Updated Title";
+        PostDto postDto = createBasePostDto();
+        postService.save(postDto);
+        PostDto persistentPostDto = postService.getPostById(postDto.getId());
+        persistentPostDto.setTitle(newTitle);
+        postService.updatePost(persistentPostDto.getId(), persistentPostDto);
+        Assert.assertEquals(newTitle, postService.getPostById(persistentPostDto.getId()).getTitle());
     }
 }

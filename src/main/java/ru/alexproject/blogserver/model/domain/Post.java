@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.alexproject.blogserver.model.dto.PostDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,10 +12,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "title")

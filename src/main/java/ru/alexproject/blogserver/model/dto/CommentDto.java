@@ -81,6 +81,22 @@ public class CommentDto implements Serializable{
         return post;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public Comment toEntity() {
         return new Comment()
                 .setId(id)

@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.alexproject.blogserver.model.dto.DialogDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "dialogs")
-public class Dialog {
+public class Dialog implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "dialog_name")

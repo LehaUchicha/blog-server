@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import ru.alexproject.blogserver.model.dto.CommentDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
+public class Comment implements Serializable{
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "text")

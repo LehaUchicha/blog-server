@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import ru.alexproject.blogserver.model.dto.UserDialogDto;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_dialog")
-public class UserDialog {
+public class UserDialog implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
