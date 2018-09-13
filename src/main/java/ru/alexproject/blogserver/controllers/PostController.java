@@ -43,17 +43,19 @@ public class PostController {
         postService.save(post);
     }
 
-    @PutMapping(value = POST_ID)
+    @PutMapping(value = POST_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public void updatePost(@PathVariable("id") Long id, @RequestBody PostDto post) {
         postService.updatePost(id, post);
     }
 
-    @DeleteMapping(value = POST_ID)
+    @DeleteMapping(value = POST_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public void deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
     }
 
-    @GetMapping(value = POST_ID_COMMENTS)
+    @GetMapping(value = POST_ID_COMMENTS, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Comment> getCommentsByPostId(@PathVariable("id") Long id) {
         return commentRepository.findAll().stream().filter(comment -> id.equals(comment.getPost().getId())).collect(Collectors.toList());
     }
