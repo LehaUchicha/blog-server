@@ -1,9 +1,8 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Set;
 
 //@Entity
 //@Table(name="messages")

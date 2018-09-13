@@ -1,11 +1,12 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import ru.alexproject.blogserver.model.dto.CommentDto;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="comments")
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -22,7 +23,7 @@ public class Comment {
     private User author;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     private Post post;
 
@@ -30,8 +31,9 @@ public class Comment {
         return id;
     }
 
-    public void setId(Long id) {
+    public Comment setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getText() {
@@ -59,5 +61,14 @@ public class Comment {
     public Comment setPost(Post post) {
         this.post = post;
         return this;
+    }
+
+    public CommentDto toDto() {
+        return CommentDto.build()
+                .withId(id)
+                .withText(text)
+                .withAuthor(author)
+                .withPost(post)
+                .please();
     }
 }

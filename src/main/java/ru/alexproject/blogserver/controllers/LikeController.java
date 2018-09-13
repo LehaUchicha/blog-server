@@ -2,20 +2,14 @@ package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.Comment;
-import ru.alexproject.blogserver.model.Like;
-import ru.alexproject.blogserver.model.Post;
-import ru.alexproject.blogserver.model.User;
-import ru.alexproject.blogserver.repositories.CommentRepository;
-import ru.alexproject.blogserver.repositories.LikeRepository;
+import ru.alexproject.blogserver.model.domain.Post;
+import ru.alexproject.blogserver.model.domain.User;
+import ru.alexproject.blogserver.model.dto.LikeDto;
+import ru.alexproject.blogserver.services.LikeService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Comments.API_COMMENTS;
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Common.ID;
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Likes.*;
 
 @RestController
@@ -24,56 +18,40 @@ import static ru.alexproject.blogserver.utils.RestApiEndpoints.Likes.*;
 public class LikeController {
 
     @Autowired
-    private LikeRepository likeRepository;
+    private LikeService likeService;
 
     @GetMapping
-    public List<Like> getAll() {
-        return likeRepository.findAll();
+    public List<LikeDto> getAll() {
+        return likeService.getAll();
     }
 
     @GetMapping(value = FOR_COMMENTS)
-    public Set<Like> getLikesOnComment() {
-        return likeRepository.findAll().stream()
-                .filter(like -> like.getComment() != null)
-                .collect(Collectors.toSet());
+    public Set<LikeDto> getLikesOnComment() {
+        return likeService.getLikesOnComment();
     }
 
     @GetMapping(value = BY_COMMENT_ID)
-    public Set<Like> getLikesByCommentId(@PathVariable("id") Long id) {
-        return likeRepository.findAll().stream()
-                .filter(like -> like.getComment() != null)
-                .filter(like -> like.getComment().getId().equals(id))
-                .collect(Collectors.toSet());
+    public Set<LikeDto> getLikesByCommentId(@PathVariable("id") Long id) {
+        return likeService.getLikesByCommentId(id);
     }
 
     @GetMapping(value = FOR_POSTS)
-    public Set<Like> getLikesOnPosts() {
-        return likeRepository.findAll().stream()
-                .filter(like -> like.getPost() != null)
-                .collect(Collectors.toSet());
+    public Set<LikeDto> getLikesOnPosts() {
+        return likeService.getLikesOnPosts();
     }
 
     @GetMapping(value = BY_POST_ID)
-    public Set<Like> getLikesByPostId(@PathVariable("id") Long id) {
-        return likeRepository.findAll().stream()
-                .filter(like -> like.getPost() != null)
-                .filter(like -> like.getPost().getId().equals(id))
-                .collect(Collectors.toSet());
+    public Set<LikeDto> getLikesByPostId(@PathVariable("id") Long id) {
+        return likeService.getLikesByPostId(id);
     }
 
     @PostMapping(value = "/increase")
     public void increasePostLikeCount(@RequestBody User user, @RequestBody Post post) {
-        Like like = new Like(user);
-        like.setPost(post);
-        likeRepository.save(like);
+        likeService.increasePostLikeCount(user.toDto(), post.toDto());
     }
 
     @PostMapping(value = "/decrease")
     public void decreasePostLikeCount(@RequestBody User user, @RequestBody Post post) {
-        likeRepository.findAll().stream()
-                .filter(like -> like.getUser().equals(user))
-                .filter(like -> like.getPost().equals(post))
-                .findFirst()
-                .ifPresent(likeRepository::delete);
+        likeService.decreasePostLikeCount(user.toDto(), post.toDto());
     }
 }

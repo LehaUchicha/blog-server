@@ -1,4 +1,6 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
+
+import ru.alexproject.blogserver.model.dto.PostDto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -6,9 +8,8 @@ import java.util.List;
 /**
  * Created by Alex on 21.03.2018.
  */
-
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Post {
 
     @Id
@@ -31,39 +32,54 @@ public class Post {
         return id;
     }
 
-    public void setId(Long id) {
+    public Post setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Post setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getShortText() {
         return shortText;
     }
 
-    public void setShortText(String shortText) {
+    public Post setShortText(String shortText) {
         this.shortText = shortText;
+        return this;
     }
 
     public String getFullText() {
         return fullText;
     }
 
-    public void setFullText(String fullText) {
+    public Post setFullText(String fullText) {
         this.fullText = fullText;
+        return this;
     }
 
     public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public Post setComments(List<Comment> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public PostDto toDto() {
+        return PostDto.build()
+                .withId(id)
+                .withTitle(title)
+                .withShortText(shortText)
+                .withFullText(fullText)
+                .withComments(comments)
+                .please();
     }
 }

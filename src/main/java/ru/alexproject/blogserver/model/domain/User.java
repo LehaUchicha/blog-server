@@ -1,7 +1,8 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import ru.alexproject.blogserver.model.dto.UserDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -48,65 +49,84 @@ public class User implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public User setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public User setRoles(Set<Role> roles) {
         this.roles = roles;
+        return this;
     }
 
     public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public User setComments(Set<Comment> comments) {
         this.comments = comments;
+        return this;
     }
 
     public Set<UserDialog> getDialogs() {
         return dialogs;
     }
 
-    public void setDialogs(Set<UserDialog> dialogs) {
+    public User setDialogs(Set<UserDialog> dialogs) {
         this.dialogs = dialogs;
+        return this;
     }
 
-
+    public UserDto toDto() {
+        return UserDto.build()
+                .withComments(comments)
+                .withDialogs(dialogs)
+                .withFirstName(firstName)
+                .withId(id)
+                .withLastName(lastName)
+                .withPassword(password)
+                .withRoles(roles)
+                .withUsername(username)
+                .please();
+    }
 }

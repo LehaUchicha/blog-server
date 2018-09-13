@@ -1,6 +1,7 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import ru.alexproject.blogserver.model.dto.UserDialogDto;
 
 import javax.persistence.*;
 
@@ -29,31 +30,44 @@ public class UserDialog {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserDialog setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public UserDialog setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public Dialog getDialog() {
         return dialog;
     }
 
-    public void setDialog(Dialog dialog) {
+    public UserDialog setDialog(Dialog dialog) {
         this.dialog = dialog;
+        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public UserDialog setText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public UserDialogDto toDto() {
+        return UserDialogDto.build()
+                .withId(id)
+                .withText(text)
+                .withUser(user)
+                .withDialog(dialog)
+                .please();
     }
 }

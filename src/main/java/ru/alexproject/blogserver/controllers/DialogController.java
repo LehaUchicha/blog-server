@@ -2,14 +2,13 @@ package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.Dialog;
-import ru.alexproject.blogserver.model.User;
-import ru.alexproject.blogserver.model.UserDialog;
-import ru.alexproject.blogserver.repositories.DialogRepository;
+import ru.alexproject.blogserver.model.dto.DialogDto;
+import ru.alexproject.blogserver.model.dto.UserDialogDto;
+import ru.alexproject.blogserver.model.dto.UserDto;
+import ru.alexproject.blogserver.services.DialogService;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.*;
 
@@ -19,35 +18,25 @@ import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.*;
 public class DialogController {
 
     @Autowired
-    private DialogRepository dialogRepository;
+    private DialogService dialogService;
 
     @GetMapping
-    private List<UserDialog> getAllDialogs() {
-        return dialogRepository.findAll();
+    private List<UserDialogDto> getAllDialogs() {
+        return dialogService.getAllDialogs();
     }
 
     @GetMapping(value = DIALOG_ID)
-    private Set<UserDialog> getDialogById(@PathVariable("id") Long id) {
-        return dialogRepository.findAll().stream()
-                .filter(dialog -> dialog.getDialog().getId().equals(id))
-                .collect(Collectors.toSet());
+    private Set<UserDialogDto> getDialogById(@PathVariable("id") Long id) {
+        return dialogService.getDialogById(id);
     }
 
     @GetMapping(value = USER_DIALOGS)
-    private Set<Dialog> getAllDialogsForUser(@PathVariable("id") Long id) {
-        return dialogRepository.findAll().stream()
-                .filter(userDialog -> userDialog.getUser().getId().equals(id))
-                .map(userDialog -> userDialog.getDialog())
-                .distinct()
-                .collect(Collectors.toSet());
+    private Set<DialogDto> getAllDialogsForUser(@PathVariable("id") Long id) {
+        return dialogService.getAllDialogsForUser(id);
     }
 
     @GetMapping(value = USERS_FOR_DIALOG)
-    private Set<User> getAllUsersForDialog(@PathVariable("id") Long id) {
-        return dialogRepository.findAll().stream()
-                .filter(userDialog -> userDialog.getDialog().getId().equals(id))
-                .map(userDialog -> userDialog.getUser())
-                .distinct()
-                .collect(Collectors.toSet());
+    private Set<UserDto> getAllUsersForDialog(@PathVariable("id") Long id) {
+        return dialogService.getAllUsersForDialog(id);
     }
 }

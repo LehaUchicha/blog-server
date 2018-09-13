@@ -1,17 +1,12 @@
-package ru.alexproject.blogserver.model;
+package ru.alexproject.blogserver.model.domain;
+
+import ru.alexproject.blogserver.model.dto.LikeDto;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "likes")
 public class Like {
-
-    public Like() {
-    }
-
-    public Like(User user) {
-        this.user = user;
-    }
 
     @Id
     @Column(name = "id")
@@ -34,31 +29,46 @@ public class Like {
         return id;
     }
 
-    public void setId(Long id) {
+    public Like setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Like setUser(User user) {
+        if (user != null)
+            this.user = user;
+        return this;
     }
 
     public Post getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public Like setPost(Post post) {
+        if (post != null)
+            this.post = post;
+        return this;
     }
 
     public Comment getComment() {
         return comment;
     }
 
-    public void setComment(Comment comment) {
+    public Like setComment(Comment comment) {
         this.comment = comment;
+        return this;
+    }
+
+    public LikeDto toDto() {
+        return LikeDto.build()
+                .setId(id)
+                .setUser(user)
+                .setPost(post)
+                .setComment(comment)
+                .please();
     }
 }

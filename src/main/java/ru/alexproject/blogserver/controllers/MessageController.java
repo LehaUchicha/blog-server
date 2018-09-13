@@ -1,14 +1,6 @@
 package ru.alexproject.blogserver.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.Message;
 import ru.alexproject.blogserver.repositories.MessageRepository;
-
-import java.util.List;
-
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.API_MESSAGES;
-import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.MESSAGE_ID;
 
 //@RestController
 //@RequestMapping(API_MESSAGES)
@@ -36,7 +28,7 @@ public class MessageController {
 //    @PutMapping(value = MESSAGE_ID)
 //    public void updateMessage(@PathVariable("id") Long id, @RequestBody Message message) {
 //        Message msg = messageRepository.findOne(id);
-//        msg.setText(message.getText());
+//        msg.withText(message.getText());
 //        messageRepository.save(msg);
 //    }
 //

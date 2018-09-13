@@ -1,21 +1,18 @@
 package ru.alexproject.blogserver.services;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-import ru.alexproject.blogserver.model.User;
+import ru.alexproject.blogserver.model.dto.UserDto;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public interface UserService {
 
-    User findUserById(Long id);
+    UserDto findUserById(Long id);
 
-    List<User> findAllUsers();
+    List<UserDto> findAllUsers();
 
-    User findUserByUsername(String username);
+    UserDto findUserByUsername(String username);
 
-    void register(User user);
+    void register(UserDto user);
 
-    User save(User user);
+    void save(UserDto user);
 }
