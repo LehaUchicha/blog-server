@@ -10,6 +10,9 @@ import java.util.Set;
 
 public class UserDto implements Serializable{
 
+    private UserDto() {
+    }
+
     private Long id;
 
     private String username;

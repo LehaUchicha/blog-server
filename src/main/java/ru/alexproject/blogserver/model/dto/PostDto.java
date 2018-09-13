@@ -8,6 +8,9 @@ import java.util.List;
 
 public class PostDto implements Serializable{
 
+    private PostDto() {
+    }
+
     private Long id;
 
     private String title;

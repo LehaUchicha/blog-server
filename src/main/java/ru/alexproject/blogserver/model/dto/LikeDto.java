@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 public class LikeDto implements Serializable{
 
+    private LikeDto() {
+    }
+
     private Long id;
 
     private User user;

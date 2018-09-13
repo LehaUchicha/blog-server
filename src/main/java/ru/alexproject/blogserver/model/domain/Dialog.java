@@ -18,7 +18,7 @@ public class Dialog {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dialog")
-    @JsonManagedReference
+    @JsonManagedReference("dialog-manager")
     private Set<UserDialog> users;
 
     public Long getId() {

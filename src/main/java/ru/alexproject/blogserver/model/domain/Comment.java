@@ -19,12 +19,12 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn
-    @JsonBackReference
+    @JsonBackReference("user-manage")
     private User author;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonBackReference
+    @JsonBackReference("comment-manage")
     private Post post;
 
     public Long getId() {

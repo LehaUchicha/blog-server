@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 public class CommentDto implements Serializable{
 
+    private CommentDto() {
+    }
+
     private Long id;
 
     private String text;

@@ -34,15 +34,14 @@ public class User implements Serializable {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @JsonManagedReference
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference("user-dialog-manage")
     private Set<UserDialog> dialogs;
 
     @OneToMany(mappedBy = "author")
-    @JsonManagedReference
+    @JsonManagedReference("user-manage")
     private Set<Comment> comments;
 
     public Long getId() {

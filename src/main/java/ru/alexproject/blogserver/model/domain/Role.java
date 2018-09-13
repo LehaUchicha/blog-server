@@ -1,7 +1,5 @@
 package ru.alexproject.blogserver.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,7 +20,6 @@ public class Role {
     private String description;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonBackReference
     private Set<User> users;
 
     public static long getSerialVersionUID() {

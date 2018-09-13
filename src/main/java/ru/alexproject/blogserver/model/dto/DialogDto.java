@@ -8,6 +8,9 @@ import java.util.Set;
 
 public class DialogDto implements Serializable {
 
+    private DialogDto() {
+    }
+
     private Long id;
 
     private String name;

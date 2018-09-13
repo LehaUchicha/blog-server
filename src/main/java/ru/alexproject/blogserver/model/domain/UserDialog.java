@@ -15,12 +15,12 @@ public class UserDialog {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-dialog-manage")
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dialog_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("dialog-manager")
     private Dialog dialog;
 
     @Column(name = "text")

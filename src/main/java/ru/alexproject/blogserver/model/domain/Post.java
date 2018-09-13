@@ -1,5 +1,6 @@
 package ru.alexproject.blogserver.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.alexproject.blogserver.model.dto.PostDto;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Post {
     private String fullText;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @JsonManagedReference("comment-manage")
     private List<Comment> comments;
 
     public Long getId() {

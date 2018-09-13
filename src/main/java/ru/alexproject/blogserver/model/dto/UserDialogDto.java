@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 public class UserDialogDto implements Serializable {
 
+    private UserDialogDto() {
+    }
+
     private Long id;
 
     private User user;
