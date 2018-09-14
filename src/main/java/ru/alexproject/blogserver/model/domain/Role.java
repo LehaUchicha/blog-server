@@ -1,5 +1,7 @@
 package ru.alexproject.blogserver.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -21,6 +23,7 @@ public class Role implements Serializable{
     private String description;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<User> users;
 
     public static long getSerialVersionUID() {

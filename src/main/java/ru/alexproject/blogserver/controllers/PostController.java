@@ -3,13 +3,12 @@ package ru.alexproject.blogserver.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.domain.Comment;
+import ru.alexproject.blogserver.model.dto.CommentDto;
 import ru.alexproject.blogserver.model.dto.PostDto;
-import ru.alexproject.blogserver.repositories.CommentRepository;
+import ru.alexproject.blogserver.services.CommentService;
 import ru.alexproject.blogserver.services.PostService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Posts.*;
 
@@ -26,7 +25,7 @@ public class PostController {
     private PostService postService;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentService commentRepository;
 
     @GetMapping(value = POST_ID)
     public PostDto getPostById(@PathVariable("id") Long id) {
@@ -56,7 +55,7 @@ public class PostController {
     }
 
     @GetMapping(value = POST_ID_COMMENTS, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Comment> getCommentsByPostId(@PathVariable("id") Long id) {
-        return commentRepository.findAll().stream().filter(comment -> id.equals(comment.getPost().getId())).collect(Collectors.toList());
+    public List<CommentDto> getCommentsByPostId(@PathVariable("id") Long id) {
+        return commentRepository.getCommentsByPostId(id);
     }
 }

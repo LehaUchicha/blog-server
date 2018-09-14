@@ -2,9 +2,9 @@ package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.alexproject.blogserver.model.domain.Post;
-import ru.alexproject.blogserver.model.domain.User;
 import ru.alexproject.blogserver.model.dto.LikeDto;
+import ru.alexproject.blogserver.model.dto.PostDto;
+import ru.alexproject.blogserver.model.dto.UserDto;
 import ru.alexproject.blogserver.services.LikeService;
 
 import java.util.List;
@@ -46,12 +46,12 @@ public class LikeController {
     }
 
     @PostMapping(value = "/increase")
-    public void increasePostLikeCount(@RequestBody User user, @RequestBody Post post) {
-        likeService.increasePostLikeCount(user.toDto(), post.toDto());
+    public void increasePostLikeCount(@RequestBody UserDto user, @RequestBody PostDto post) {
+        likeService.increasePostLikeCount(user, post);
     }
 
     @PostMapping(value = "/decrease")
-    public void decreasePostLikeCount(@RequestBody User user, @RequestBody Post post) {
-        likeService.decreasePostLikeCount(user.toDto(), post.toDto());
+    public void decreasePostLikeCount(@RequestBody UserDto user, @RequestBody PostDto post) {
+        likeService.decreasePostLikeCount(user, post);
     }
 }
