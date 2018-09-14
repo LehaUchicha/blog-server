@@ -1,11 +1,13 @@
 package ru.alexproject.blogserver.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.alexproject.blogserver.model.dto.PostDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Alex on 21.03.2018.
@@ -30,6 +32,10 @@ public class Post implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     @JsonManagedReference("comment-manage")
     private List<Comment> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    @JsonIgnore
+    private Set<Like> likes;
 
     public Long getId() {
         return id;
@@ -74,6 +80,14 @@ public class Post implements Serializable{
     public Post setComments(List<Comment> comments) {
         this.comments = comments;
         return this;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 
     public PostDto toDto() {

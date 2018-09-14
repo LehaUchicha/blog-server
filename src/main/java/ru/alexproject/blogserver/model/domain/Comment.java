@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.alexproject.blogserver.model.dto.CommentDto;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Comment implements Serializable{
     private Post post;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    @JsonIgnore
     private Set<Like> likes;
 
     public Long getId() {
@@ -65,6 +67,14 @@ public class Comment implements Serializable{
     public Comment setPost(Post post) {
         this.post = post;
         return this;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 
     public CommentDto toDto() {
