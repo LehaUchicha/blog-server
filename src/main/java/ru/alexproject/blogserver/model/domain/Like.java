@@ -21,7 +21,7 @@ public class Like implements Serializable{
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "comment_id")
     private Comment comment;
 

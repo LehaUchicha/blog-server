@@ -5,6 +5,7 @@ import ru.alexproject.blogserver.model.dto.CommentDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "comments")
@@ -26,6 +27,9 @@ public class Comment implements Serializable{
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference("comment-manage")
     private Post post;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    private Set<Like> likes;
 
     public Long getId() {
         return id;
