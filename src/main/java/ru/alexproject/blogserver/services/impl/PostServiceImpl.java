@@ -17,7 +17,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public PostDto getPostById(Long id){
+    public PostDto getPostById(Long id) {
         return postRepository.findOne(id).toDto();
     }
 
@@ -26,20 +26,20 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post.toEntity());
     }
 
-    public List<PostDto> getPosts(){
+    public List<PostDto> getPosts() {
         List<PostDto> posts = new ArrayList<>();
         postRepository.findAll().forEach(p -> posts.add(p.toDto()));
         return posts;
     }
 
     @Override
-    public void updatePost(Long id, PostDto postDto){
+    public void updatePost(Long id, PostDto postDto) {
         Post persistent = postRepository.findOne(id);
         Optional.ofNullable(postDto.getTitle())
                 .ifPresent(persistent::setTitle);
-        Optional.ofNullable(postDto.getTitle())
+        Optional.ofNullable(postDto.getShortText())
                 .ifPresent(persistent::setShortText);
-        Optional.ofNullable(postDto.getTitle())
+        Optional.ofNullable(postDto.getFullText())
                 .ifPresent(persistent::setFullText);
         Optional.ofNullable(postDto.getComments())
                 .ifPresent(persistent::setComments);
@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(Long id){
+    public void deletePost(Long id) {
         postRepository.delete(id);
     }
 

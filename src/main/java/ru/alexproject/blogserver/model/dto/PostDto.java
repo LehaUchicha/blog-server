@@ -6,7 +6,7 @@ import ru.alexproject.blogserver.model.domain.Post;
 import java.io.Serializable;
 import java.util.List;
 
-public class PostDto implements Serializable{
+public class PostDto implements Serializable {
 
     private PostDto() {
     }
@@ -122,5 +122,19 @@ public class PostDto implements Serializable{
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof PostDto)) return false;
+
+        PostDto postDto = (PostDto) obj;
+
+        return id.equals(postDto.id) &&
+                title.equals(postDto.title) &&
+                shortText.equals(postDto.shortText) &&
+                comments.equals(postDto.comments);
     }
 }

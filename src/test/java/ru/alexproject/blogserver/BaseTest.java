@@ -12,7 +12,7 @@ import static ru.alexproject.blogserver.model.EntityUtils.newId;
 
 @TestPropertySource(locations = "classpath:application-test.properties")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseTest {
 
     @Autowired
