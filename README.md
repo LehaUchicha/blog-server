@@ -1,5 +1,7 @@
 # blog-server
 
+<h2>Blog Server</h2>
+<p>Blog server - is a backend part of block. Realized on SOA architecture.
 [![Build Status](https://travis-ci.org/LehaUchicha/blog-server.svg?branch=master)](https://travis-ci.org/LehaUchicha/blog-server)
 
 <img src="https://sonarcloud.io/api/project_badges/measure?project=LehaUchicha_blog-server&metric=bugs" />
