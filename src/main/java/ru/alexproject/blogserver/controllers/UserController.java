@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.dto.UserDto;
@@ -23,6 +24,7 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN_USER')")
     public List<UserDto> findAllUsers() {
         return userService.findAllUsers();
     }

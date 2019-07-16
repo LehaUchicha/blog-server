@@ -2,6 +2,7 @@ package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.model.dto.CommentDto;
 import ru.alexproject.blogserver.model.dto.PostDto;
@@ -38,11 +39,13 @@ public class PostController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void createPost(@RequestBody PostDto post) {
         postService.save(post);
     }
 
     @PutMapping(value = POST_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     @ResponseBody
     public void updatePost(@PathVariable("id") Long id, @RequestBody PostDto post) {
         postService.updatePost(id, post);
@@ -50,6 +53,7 @@ public class PostController {
 
     @DeleteMapping(value = POST_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN_USER')")
     public void deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
     }
