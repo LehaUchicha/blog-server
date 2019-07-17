@@ -1,9 +1,9 @@
 package ru.alexproject.blogserver.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.alexproject.blogserver.model.domain.Post;
-import ru.alexproject.blogserver.model.dto.PostDto;
 import ru.alexproject.blogserver.repositories.PostRepository;
 import ru.alexproject.blogserver.services.PostService;
 
@@ -17,31 +17,32 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public PostDto getPostById(Long id) {
-        return postRepository.findOne(id).toDto();
+    public Post getPostById(Long id) {
+        return postRepository.findOne(id);
     }
 
     @Override
-    public void save(PostDto post) {
-        postRepository.save(post.toEntity());
+    public void save(Post post) {
+        postRepository.save(post);
     }
 
-    public List<PostDto> getPosts() {
-        List<PostDto> posts = new ArrayList<>();
-        postRepository.findAll().forEach(p -> posts.add(p.toDto()));
+    @Cacheable("posts")
+    public List<Post> getPosts() {
+        List<Post> posts = new ArrayList<>();
+        postRepository.findAll().forEach(p -> posts.add(p));
         return posts;
     }
 
     @Override
-    public void updatePost(Long id, PostDto postDto) {
+    public void updatePost(Long id, Post post) {
         Post persistent = postRepository.findOne(id);
-        Optional.ofNullable(postDto.getTitle())
+        Optional.ofNullable(post.getTitle())
                 .ifPresent(persistent::setTitle);
-        Optional.ofNullable(postDto.getShortText())
+        Optional.ofNullable(post.getShortText())
                 .ifPresent(persistent::setShortText);
-        Optional.ofNullable(postDto.getFullText())
+        Optional.ofNullable(post.getFullText())
                 .ifPresent(persistent::setFullText);
-        Optional.ofNullable(postDto.getComments())
+        Optional.ofNullable(post.getComments())
                 .ifPresent(persistent::setComments);
         postRepository.save(persistent);
     }
@@ -50,6 +51,4 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long id) {
         postRepository.delete(id);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package ru.alexproject.blogserver.security;
+package ru.alexproject.blogserver.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,9 +34,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${security.jwt.scope-write}")
     private String scopeWrite;
 
-    @Value("${security.jwt.scope-trust}")
-    private String scopeTrust;
-
     @Value("${security.jwt.resource-ids}")
     private String resourceIds;
 
@@ -56,19 +53,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient(clientId)
                 .secret(clientSecret)
                 .authorizedGrantTypes(grantType)
-                .scopes(scopeRead, scopeWrite, scopeTrust)
+                .scopes(scopeRead, scopeWrite)
                 .resourceIds(resourceIds);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager);
-//        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-//        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
-//        endpoints.tokenStore(tokenStore)
-//                .accessTokenConverter(accessTokenConverter)
-//                .tokenEnhancer(enhancerChain)
-//                .authenticationManager(authenticationManager);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter));
+        endpoints.tokenStore(tokenStore)
+                .accessTokenConverter(accessTokenConverter)
+                .tokenEnhancer(enhancerChain)
+                .authenticationManager(authenticationManager);
     }
 
     @Override

@@ -5,10 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.dto.*;
 import ru.alexproject.blogserver.services.*;
 
-import static ru.alexproject.blogserver.model.EntityUtils.newId;
+import static ru.alexproject.blogserver.utils.EntityUtils.newId;
 
 @TestPropertySource(locations = "classpath:application-test.properties")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,43 +31,46 @@ public abstract class BaseTest {
     @Autowired
     protected DialogService dialogService;
 
+    @Autowired
+    protected Mapper modelMapper;
+
     protected PostDto createBasePostDto() {
-        return PostDto.build()
-                .withId(newId())
-                .withFullText("Base Full Text")
-                .withShortText("Base short Text")
-                .withTitle("Base Title")
-                .please();
+        return PostDto.builder()
+                .id(newId())
+                .fullText("Base Full Text")
+                .shortText("Base short Text")
+                .title("Base Title")
+                .build();
     }
 
     protected UserDto createBaseUserDto() {
-        return UserDto.build()
-                .withId(newId())
-                .withUsername("Alex")
-                .withFirstName("Alex")
-                .withLastName("Lex")
-                .withPassword("pass")
-                .please();
+        return UserDto.builder()
+                .id(newId())
+                .username("Alex")
+                .firstName("Alex")
+                .lastName("Lex")
+                .password("pass")
+                .build();
     }
 
     protected CommentDto createBaseCommentDto() {
-        return CommentDto.build()
-                .withId(newId())
-                .withText("Comment")
-                .please();
+        return CommentDto.builder()
+                .id(newId())
+                .text("Comment")
+                .build();
     }
 
     protected DialogDto createBaseDialog() {
-        return DialogDto.build()
-                .withId(newId())
-                .withName("Best Dialog")
-                .please();
+        return DialogDto.builder()
+                .id(newId())
+                .name("Best Dialog")
+                .build();
     }
 
     protected UserDialogDto createBaseUserDialogDto() {
-        return UserDialogDto.build()
-                .withId(newId())
-                .withText("hello")
-                .please();
+        return UserDialogDto.builder()
+                .id(newId())
+                .text("hello")
+                .build();
     }
 }

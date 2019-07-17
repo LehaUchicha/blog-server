@@ -1,5 +1,9 @@
 package ru.alexproject.blogserver.services;
 
+import ru.alexproject.blogserver.model.domain.Comment;
+import ru.alexproject.blogserver.model.domain.Like;
+import ru.alexproject.blogserver.model.domain.Post;
+import ru.alexproject.blogserver.model.domain.User;
 import ru.alexproject.blogserver.model.dto.CommentDto;
 import ru.alexproject.blogserver.model.dto.LikeDto;
 import ru.alexproject.blogserver.model.dto.PostDto;
@@ -10,21 +14,21 @@ import java.util.Set;
 
 public interface LikeService {
 
-    List<LikeDto> getAll();
+    List<Like> getAll();
 
-    Set<LikeDto> getLikesOnComment();
+    Set<Like> getLikesOnComment();
 
-    Set<LikeDto> getLikesByCommentId(Long id);
+    Set<Like> getLikesByCommentId(Long id);
 
-    Set<LikeDto> getLikesOnPosts();
+    Set<Like> getLikesOnPosts();
 
-    Set<LikeDto> getLikesByPostId(Long id);
+    Set<Like> getLikesByPostId(Long id);
 
-    void increasePostLikeCount(UserDto user, PostDto post);
+    void increasePostLikeCount(User user, Post post);
 
-    void decreasePostLikeCount(UserDto user, PostDto post);
+    void decreasePostLikeCount(User user, Post post);
 
-    void increaseCommentLikeCount(UserDto user, CommentDto post);
+    void increaseCommentLikeCount(User user, Comment comment);
 
-    void decreaseCommentLikeCount(UserDto user, CommentDto post);
+    void decreaseCommentLikeCount(User user, Comment comment);
 }

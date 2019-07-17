@@ -1,12 +1,19 @@
 package ru.alexproject.blogserver.model.domain;
 
-import ru.alexproject.blogserver.model.dto.LikeDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "likes")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Like implements Serializable{
 
     @Id
@@ -24,51 +31,4 @@ public class Like implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "comment_id")
     private Comment comment;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Like setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Like setUser(User user) {
-        if (user != null)
-            this.user = user;
-        return this;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public Like setPost(Post post) {
-        if (post != null)
-            this.post = post;
-        return this;
-    }
-
-    public Comment getComment() {
-        return comment;
-    }
-
-    public Like setComment(Comment comment) {
-        this.comment = comment;
-        return this;
-    }
-
-    public LikeDto toDto() {
-        return LikeDto.build()
-                .setId(id)
-                .setUser(user)
-                .setPost(post)
-                .setComment(comment)
-                .please();
-    }
 }

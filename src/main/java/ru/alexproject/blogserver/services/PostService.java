@@ -1,18 +1,19 @@
 package ru.alexproject.blogserver.services;
 
+import ru.alexproject.blogserver.model.domain.Post;
 import ru.alexproject.blogserver.model.dto.PostDto;
 
 import java.util.List;
 
 public interface PostService {
 
-    List<PostDto> getPosts();
+    List<Post> getPosts();
 
-    void save(PostDto post);
+    void save(Post post);
 
-    void updatePost(Long id, PostDto post);
+    void updatePost(Long id, Post post);
 
     void deletePost(Long id);
 
-    PostDto getPostById(Long id);
+    Post getPostById(Long id);
 }

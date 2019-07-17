@@ -2,14 +2,19 @@ package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.alexproject.blogserver.model.dto.CommentDto;
-
+import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "comments")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude="likes")
+@ToString(exclude = "likes")
 public class Comment implements Serializable{
 
     @Id
@@ -32,57 +37,4 @@ public class Comment implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     @JsonIgnore
     private Set<Like> likes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Comment setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Comment setText(String text) {
-        this.text = text;
-        return this;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public Comment setAuthor(User author) {
-        this.author = author;
-        return this;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public Comment setPost(Post post) {
-        this.post = post;
-        return this;
-    }
-
-    public Set<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Set<Like> likes) {
-        this.likes = likes;
-    }
-
-    public CommentDto toDto() {
-        return CommentDto.build()
-                .withId(id)
-                .withText(text)
-                .withAuthor(author)
-                .withPost(post)
-                .please();
-    }
 }

@@ -2,7 +2,7 @@ package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import ru.alexproject.blogserver.model.dto.PostDto;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +14,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "posts")
-public class Post implements Serializable{
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"likes", "comments"})
+@ToString(exclude = {"likes", "comments"})
+public class Post implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -36,67 +42,4 @@ public class Post implements Serializable{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
     @JsonIgnore
     private Set<Like> likes;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Post setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Post setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getShortText() {
-        return shortText;
-    }
-
-    public Post setShortText(String shortText) {
-        this.shortText = shortText;
-        return this;
-    }
-
-    public String getFullText() {
-        return fullText;
-    }
-
-    public Post setFullText(String fullText) {
-        this.fullText = fullText;
-        return this;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public Post setComments(List<Comment> comments) {
-        this.comments = comments;
-        return this;
-    }
-
-    public Set<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Set<Like> likes) {
-        this.likes = likes;
-    }
-
-    public PostDto toDto() {
-        return PostDto.build()
-                .withId(id)
-                .withTitle(title)
-                .withShortText(shortText)
-                .withFullText(fullText)
-                .withComments(comments)
-                .please();
-    }
 }

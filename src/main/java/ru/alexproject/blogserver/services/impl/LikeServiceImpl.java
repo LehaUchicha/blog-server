@@ -2,20 +2,17 @@ package ru.alexproject.blogserver.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.alexproject.blogserver.model.domain.Comment;
 import ru.alexproject.blogserver.model.domain.Like;
-import ru.alexproject.blogserver.model.dto.CommentDto;
-import ru.alexproject.blogserver.model.dto.LikeDto;
-import ru.alexproject.blogserver.model.dto.PostDto;
-import ru.alexproject.blogserver.model.dto.UserDto;
+import ru.alexproject.blogserver.model.domain.Post;
+import ru.alexproject.blogserver.model.domain.User;
 import ru.alexproject.blogserver.repositories.LikeRepository;
 import ru.alexproject.blogserver.services.LikeService;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import static ru.alexproject.blogserver.model.EntityUtils.newId;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -24,77 +21,52 @@ public class LikeServiceImpl implements LikeService {
     private LikeRepository repository;
 
     @Override
-    public List<LikeDto> getAll() {
-        return repository.findAll().stream()
-                .map(like -> like.toDto())
-                .collect(Collectors.toList());
+    @Transactional
+    public List<Like> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public Set<LikeDto> getLikesOnComment() {
-        return repository.getLikesOnComment().stream()
-                .map(like -> like.toDto())
-                .collect(Collectors.toSet());
+    public Set<Like> getLikesOnComment() {
+        return repository.getLikesOnComment();
     }
 
     @Override
-    public Set<LikeDto> getLikesByCommentId(Long id) {
-        return repository.getLikesByCommentId(id).stream()
-                .map(like -> like.toDto())
-                .collect(Collectors.toSet());
+    public Set<Like> getLikesByCommentId(Long id) {
+        return repository.getLikesByCommentId(id);
     }
 
     @Override
-    public Set<LikeDto> getLikesOnPosts() {
-        return repository.getLikesOnPosts().stream()
-                .map(Like::toDto)
-                .collect(Collectors.toSet());
+    public Set<Like> getLikesOnPosts() {
+        return repository.getLikesOnPosts();
     }
 
     @Override
-    public Set<LikeDto> getLikesByPostId(Long id) {
-        return repository.getLikesByPostId(id).stream()
-                .map(like -> like.toDto())
-                .collect(Collectors.toSet());
+    public Set<Like> getLikesByPostId(Long id) {
+        return repository.getLikesByPostId(id);
     }
 
     @Override
-    public void increasePostLikeCount(UserDto user, PostDto post) {
-        if (repository.findLikesByUserAndPost(post.toEntity(), user.toEntity()) == null) {
-            repository.save(
-                    LikeDto.build()
-                            .setId(newId())
-                            .setUser(user.toEntity())
-                            .setPost(post.toEntity())
-                            .please()
-                            .toEntity());
-        }
+    public void increasePostLikeCount(User user, Post post) {
+        Optional.ofNullable(repository.findLikesByUserAndPost(post, user))
+                .ifPresent(like -> repository.save(like));
     }
 
     @Override
-    public void decreasePostLikeCount(UserDto user, PostDto post) {
-        Optional.ofNullable(repository.findLikesByUserAndPost(post.toEntity(), user.toEntity()))
+    public void decreasePostLikeCount(User user, Post post) {
+        Optional.ofNullable(repository.findLikesByUserAndPost(post, user))
                 .ifPresent(repository::delete);
     }
 
     @Override
-    public void increaseCommentLikeCount(UserDto user, CommentDto commentDto) {
-        if (repository.findLikesByUserAndComment(commentDto.toEntity(), user.toEntity()) == null) {
-            repository.save(
-                    LikeDto.build()
-                            .setId(newId())
-                            .setUser(user.toEntity())
-                            .setComment(commentDto.toEntity())
-                            .please()
-                            .toEntity());
-        }
+    public void increaseCommentLikeCount(User user, Comment comment) {
+        Optional.ofNullable(repository.findLikesByUserAndComment(comment, user))
+                .ifPresent(like -> repository.save(like));
     }
 
     @Override
-    public void decreaseCommentLikeCount(UserDto user, CommentDto commentDto) {
-        Optional.ofNullable(repository.findLikesByUserAndComment(commentDto.toEntity(), user.toEntity()))
+    public void decreaseCommentLikeCount(User user, Comment comment) {
+        Optional.ofNullable(repository.findLikesByUserAndComment(comment, user))
                 .ifPresent(repository::delete);
     }
 }
-
-

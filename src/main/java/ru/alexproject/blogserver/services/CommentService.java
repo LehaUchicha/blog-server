@@ -1,20 +1,20 @@
 package ru.alexproject.blogserver.services;
 
-import ru.alexproject.blogserver.model.dto.CommentDto;
+import ru.alexproject.blogserver.model.domain.Comment;
 
 import java.util.List;
 
 public interface CommentService {
 
-    List<CommentDto> getComments();
+    List<Comment> getComments();
 
-    CommentDto getCommentById(Long id);
+    Comment getCommentById(Long id);
 
-    void save(CommentDto comment);
+    void save(Comment comment);
 
-    void updateComment(Long id, CommentDto requestComment);
+    void updateComment(Long id, Comment requestComment);
 
     void deleteComment(Long id);
 
-    List<CommentDto> getCommentsByPostId(Long id);
+    List<Comment> getCommentsByPostId(Long id);
 }

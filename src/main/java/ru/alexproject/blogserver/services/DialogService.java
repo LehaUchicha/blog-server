@@ -1,5 +1,8 @@
 package ru.alexproject.blogserver.services;
 
+import ru.alexproject.blogserver.model.domain.Dialog;
+import ru.alexproject.blogserver.model.domain.User;
+import ru.alexproject.blogserver.model.domain.UserDialog;
 import ru.alexproject.blogserver.model.dto.DialogDto;
 import ru.alexproject.blogserver.model.dto.UserDialogDto;
 import ru.alexproject.blogserver.model.dto.UserDto;
@@ -9,13 +12,13 @@ import java.util.Set;
 
 public interface DialogService {
 
-    List<UserDialogDto> getAllDialogs();
+    List<UserDialog> getAllDialogs();
 
-    Set<UserDialogDto> getDialogById(Long id);
+    Set<UserDialog> getDialogById(Long id);
 
-    Set<DialogDto> getAllDialogsForUser(Long id);
+    Set<Dialog> getAllDialogsForUser(Long id);
 
-    Set<UserDto> getAllUsersForDialog(Long id);
+    Set<User> getAllUsersForDialog(Long id);
 
-    void save(UserDialogDto userDialogDto);
+    void save(UserDialog userDialogDto);
 }
