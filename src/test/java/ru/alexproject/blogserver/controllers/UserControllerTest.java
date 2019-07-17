@@ -2,6 +2,7 @@ package ru.alexproject.blogserver.controllers;
 
 import org.json.JSONException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,7 @@ import ru.alexproject.blogserver.model.dto.UserDto;
 public class UserControllerTest extends BaseIntegrationTest{
 
     @Test
+    @Ignore
     public void testGetAllUsers() throws JSONException {
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
@@ -41,6 +43,7 @@ public class UserControllerTest extends BaseIntegrationTest{
     }
 
     @Test
+    @Ignore
     public void testCreateUser() {
         UserDto user = createBaseUserDto();
 

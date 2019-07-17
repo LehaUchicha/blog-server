@@ -2,6 +2,7 @@ package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.dto.DialogDto;
 import ru.alexproject.blogserver.model.dto.UserDialogDto;
 import ru.alexproject.blogserver.model.dto.UserDto;
@@ -9,6 +10,7 @@ import ru.alexproject.blogserver.services.DialogService;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.*;
 
@@ -17,26 +19,41 @@ import static ru.alexproject.blogserver.utils.RestApiEndpoints.Messages.*;
 @CrossOrigin
 public class DialogController {
 
-    @Autowired
     private DialogService dialogService;
+
+    private Mapper modelMapper;
+
+    @Autowired
+    public DialogController(DialogService dialogService, Mapper modelMapper) {
+        this.dialogService = dialogService;
+        this.modelMapper = modelMapper;
+    }
 
     @GetMapping
     private List<UserDialogDto> getAllDialogs() {
-        return dialogService.getAllDialogs();
+        return dialogService.getAllDialogs().stream()
+                .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping(value = DIALOG_ID)
     private Set<UserDialogDto> getDialogById(@PathVariable("id") Long id) {
-        return dialogService.getDialogById(id);
+        return dialogService.getDialogById(id).stream()
+                .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
+                .collect(Collectors.toSet());
     }
 
     @GetMapping(value = USER_DIALOGS)
     private Set<DialogDto> getAllDialogsForUser(@PathVariable("id") Long id) {
-        return dialogService.getAllDialogsForUser(id);
+        return dialogService.getAllDialogsForUser(id).stream()
+                .map(dialog -> modelMapper.convert(dialog, DialogDto.class))
+                .collect(Collectors.toSet());
     }
 
     @GetMapping(value = USERS_FOR_DIALOG)
     private Set<UserDto> getAllUsersForDialog(@PathVariable("id") Long id) {
-        return dialogService.getAllUsersForDialog(id);
+        return dialogService.getAllUsersForDialog(id).stream()
+                .map(user -> modelMapper.convert(user, UserDto.class))
+                .collect(Collectors.toSet());
     }
 }

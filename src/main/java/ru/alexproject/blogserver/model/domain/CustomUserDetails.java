@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 public class CustomUserDetails implements UserDetails {
 
     private String username;
+
     private String password;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(User byUsername) {

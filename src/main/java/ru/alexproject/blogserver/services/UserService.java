@@ -1,18 +1,19 @@
 package ru.alexproject.blogserver.services;
 
+import ru.alexproject.blogserver.model.domain.User;
 import ru.alexproject.blogserver.model.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDto findUserById(Long id);
+    User findUserById(Long id);
 
-    List<UserDto> findAllUsers();
+    List<User> findAllUsers();
 
-    UserDto findUserByUsername(String username);
+    User findUserByUsername(String username);
 
-    void register(UserDto user);
+    void register(User user);
 
-    void save(UserDto user);
+    void save(User user);
 }

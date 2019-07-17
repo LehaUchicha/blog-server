@@ -1,14 +1,21 @@
 package ru.alexproject.blogserver.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import ru.alexproject.blogserver.model.dto.UserDialogDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "user_dialog")
-public class UserDialog implements Serializable{
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDialog implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -26,49 +33,4 @@ public class UserDialog implements Serializable{
 
     @Column(name = "text")
     private String text;
-
-    public Long getId() {
-        return id;
-    }
-
-    public UserDialog setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public UserDialog setUser(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public Dialog getDialog() {
-        return dialog;
-    }
-
-    public UserDialog setDialog(Dialog dialog) {
-        this.dialog = dialog;
-        return this;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public UserDialog setText(String text) {
-        this.text = text;
-        return this;
-    }
-
-    public UserDialogDto toDto() {
-        return UserDialogDto.build()
-                .withId(id)
-                .withText(text)
-                .withUser(user)
-                .withDialog(dialog)
-                .please();
-    }
 }

@@ -1,4 +1,4 @@
-package ru.alexproject.blogserver.security;
+package ru.alexproject.blogserver.constants;
 
 public class SecurityConstants {
     public static final String SECRET = "SecretKeyToGenJWTs";

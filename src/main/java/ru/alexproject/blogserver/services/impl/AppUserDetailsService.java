@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alexproject.blogserver.model.domain.User;
 import ru.alexproject.blogserver.repositories.UserRepository;
 
@@ -20,6 +21,7 @@ public class AppUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(s);
 
@@ -32,9 +34,7 @@ public class AppUserDetailsService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         });
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.
+        return new org.springframework.security.core.userdetails.
                 User(user.getUsername(), user.getPassword(), authorities);
-
-        return userDetails;
     }
 }

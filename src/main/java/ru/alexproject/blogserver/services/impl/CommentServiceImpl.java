@@ -2,8 +2,8 @@ package ru.alexproject.blogserver.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alexproject.blogserver.model.domain.Comment;
-import ru.alexproject.blogserver.model.dto.CommentDto;
 import ru.alexproject.blogserver.repositories.CommentRepository;
 import ru.alexproject.blogserver.services.CommentService;
 
@@ -18,34 +18,35 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository repository;
 
     @Override
-    public List<CommentDto> getComments() {
-        List<CommentDto> comments = new ArrayList<>();
-        repository.findAll().forEach(comment -> comments.add(comment.toDto()));
+    @Transactional
+    public List<Comment> getComments() {
+        List<Comment> comments = new ArrayList<>();
+        repository.findAll().forEach(comment -> comments.add(comment));
         return comments;
     }
 
     @Override
-    public CommentDto getCommentById(Long id) {
-        return repository.findOne(id).toDto();
+    public Comment getCommentById(Long id) {
+        return repository.findOne(id);
     }
 
     @Override
-    public void save(CommentDto comment) {
-        repository.save(comment.toEntity());
-    }
-
-    @Override
-    public void updateComment(Long id, CommentDto commentDto) {
-        Comment comment = repository.findOne(id);
-        Optional.ofNullable(commentDto.getId())
-                .ifPresent(comment::setId);
-        Optional.ofNullable(commentDto.getAuthor())
-                .ifPresent(comment::setAuthor);
-        Optional.ofNullable(commentDto.getPost())
-                .ifPresent(comment::setPost);
-        Optional.ofNullable(commentDto.getText())
-                .ifPresent(comment::setText);
+    public void save(Comment comment) {
         repository.save(comment);
+    }
+
+    @Override
+    public void updateComment(Long id, Comment newComment) {
+        Comment oldComment = repository.findOne(id);
+        Optional.ofNullable(newComment.getId())
+                .ifPresent(oldComment::setId);
+        Optional.ofNullable(newComment.getAuthor())
+                .ifPresent(oldComment::setAuthor);
+        Optional.ofNullable(newComment.getPost())
+                .ifPresent(oldComment::setPost);
+        Optional.ofNullable(newComment.getText())
+                .ifPresent(oldComment::setText);
+        repository.save(newComment);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> getCommentsByPostId(Long postId) {
+    public List<Comment> getCommentsByPostId(Long postId) {
         return repository.getCommentsByPostId(postId);
     }
 }
