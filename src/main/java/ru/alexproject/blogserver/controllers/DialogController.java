@@ -30,28 +30,28 @@ public class DialogController {
     }
 
     @GetMapping
-    private List<UserDialogDto> getAllDialogs() {
+    public List<UserDialogDto> getAllDialogs() {
         return dialogService.getAllDialogs().stream()
                 .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = DIALOG_ID)
-    private Set<UserDialogDto> getDialogById(@PathVariable("id") Long id) {
+    public Set<UserDialogDto> getDialogById(@PathVariable("id") Long id) {
         return dialogService.getDialogById(id).stream()
                 .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
                 .collect(Collectors.toSet());
     }
 
     @GetMapping(value = USER_DIALOGS)
-    private Set<DialogDto> getAllDialogsForUser(@PathVariable("id") Long id) {
+    public Set<DialogDto> getAllDialogsForUser(@PathVariable("id") Long id) {
         return dialogService.getAllDialogsForUser(id).stream()
                 .map(dialog -> modelMapper.convert(dialog, DialogDto.class))
                 .collect(Collectors.toSet());
     }
 
     @GetMapping(value = USERS_FOR_DIALOG)
-    private Set<UserDto> getAllUsersForDialog(@PathVariable("id") Long id) {
+    public Set<UserDto> getAllUsersForDialog(@PathVariable("id") Long id) {
         return dialogService.getAllUsersForDialog(id).stream()
                 .map(user -> modelMapper.convert(user, UserDto.class))
                 .collect(Collectors.toSet());
