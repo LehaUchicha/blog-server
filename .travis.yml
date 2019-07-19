@@ -41,4 +41,4 @@ script:
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
-  app: freelancerkit
+  app: alex-blog-server
