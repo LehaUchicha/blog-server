@@ -1,5 +1,5 @@
 <h2>Blog Server</h2>
-<p>Blog server - is a backend part of block. Realized on SOA architecture.</p>
+<p>Blog server - is a backend part of blog. Realized on SOA architecture.</p>
   
 <h2>Content</h2>
 <ol>
