@@ -1,5 +1,5 @@
 FROM maven:3.6.2-jdk-8
-VOLUME /tmp
+WORKDIR /usr/app
 COPY ./ ./
 RUN mvn clean install -DskipTests=true
 ADD target/blog-server-0.0.1-SNAPSHOT-exec.jar app.jar
