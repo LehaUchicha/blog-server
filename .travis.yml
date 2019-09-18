@@ -22,13 +22,11 @@ before_install:
   - docker ps -a
 
 script:
-- ./mvnw clean install -B
 - ./mvnw sonar:sonar
       -Dsonar.projectKey=LehaUchicha_blog-server
       -Dsonar.organization=lehauchicha-github
       -Dsonar.host.url=https://sonarcloud.io
       -Dsonar.login=bdff98e6ccecb9072790807739d0f7fa6eff3ea4
-- bundle exec rake test
 
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
