@@ -1,8 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.domain.User;
@@ -22,19 +21,18 @@ public class UserController {
 
     private UserService userService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private Mapper modelMapper;
 
+    private UserDetailsService userDetailsService;
+
     @Autowired
-    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, Mapper modelMapper) {
+    public UserController(UserService userService, Mapper modelMapper, UserDetailsService userDetailsService) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.modelMapper = modelMapper;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN_USER')")
     public List<UserDto> findAllUsers() {
         return userService.findAllUsers().stream()
                 .map(user -> modelMapper.convert(user, UserDto.class))
@@ -48,7 +46,27 @@ public class UserController {
 
     @PostMapping(value = REGISTRATION)
     public void register(@RequestBody UserDto user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userService.save(modelMapper.convert(user, User.class));
+        userService.register(modelMapper.convert(user, User.class));
     }
+
+//    @PostMapping(value = AUTHENTICATE)
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDto userDto) {
+//
+//        authenticate(userDto.getUsername(), userDto.getPassword());
+//        final UserDetails userDetails = userDetailsService
+//                .loadUserByUsername(userDto.getUsername());
+//        final String token = jwtTokenUtil.generateToken(userDetails);
+//        return ResponseEntity.ok(new JwtResponse(token));
+//    }
+//
+//
+//    private void authenticate(String username, String password) throws Exception {
+//        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//        } catch (DisabledException e) {
+//            throw new Exception("USER_DISABLED", e);
+//        } catch (BadCredentialsException e) {
+//            throw new Exception("INVALID_CREDENTIALS", e);
+//        }
+//    }
 }

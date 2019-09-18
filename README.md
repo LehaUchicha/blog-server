@@ -12,10 +12,16 @@
 <div id="endpoints">
    <h2>Endpoints</h2>    
    
-   <table>
+   <table cellpadding="4">
        <tr>
-            <td>PATH</td> <td>asdasd</td> <td>DESCRIPTION</td>
-        </tr>
+            <td>TYPE</td> <td>PATH</td> <td>DESCRIPTION</td><td>ACCESS</td>
+       </tr>
+       <tr>
+            <td colspan="4">Posts</td>
+       </tr>
+       <tr>
+            <td>GET</td><td>GET</td><td>GET</td><td>GET</td>
+       </tr>
    </table>
 </div>
 

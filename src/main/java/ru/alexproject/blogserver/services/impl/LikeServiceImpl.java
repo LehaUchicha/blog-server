@@ -48,8 +48,10 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void increasePostLikeCount(User user, Post post) {
-        Optional.ofNullable(repository.findLikesByUserAndPost(post, user))
-                .ifPresent(like -> repository.save(like));
+        repository.save(Like.builder()
+                .user(user)
+                .post(post)
+                .build());
     }
 
     @Override
@@ -60,8 +62,10 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public void increaseCommentLikeCount(User user, Comment comment) {
-        Optional.ofNullable(repository.findLikesByUserAndComment(comment, user))
-                .ifPresent(like -> repository.save(like));
+        repository.save(Like.builder()
+                .user(user)
+                .comment(comment)
+                .build());
     }
 
     @Override

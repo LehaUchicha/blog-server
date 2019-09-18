@@ -18,6 +18,7 @@ public final class RestApiEndpoints {
     public static class Users {
         public static final String API_USERS = "/api/users";
         public static final String REGISTRATION = "/register";
+        public static final String AUTHENTICATE = "/authenticate";
     }
 
     public static class Comments {

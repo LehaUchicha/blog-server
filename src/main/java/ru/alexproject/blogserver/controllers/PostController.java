@@ -71,7 +71,7 @@ public class PostController {
 
     @GetMapping(value = POST_ID_COMMENTS, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<CommentDto> getCommentsByPostId(@PathVariable("id") Long id) {
-        return commentService.getCommentsByPostId(id).stream()
+        return postService.getPostById(id).getComments().stream()
                 .map(comment -> modelMapper.convert(comment, CommentDto.class))
                 .collect(Collectors.toList());
     }

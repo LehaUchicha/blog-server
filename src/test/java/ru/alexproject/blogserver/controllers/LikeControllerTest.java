@@ -20,7 +20,7 @@ public class LikeControllerTest extends BaseIntegrationTest {
                 HttpMethod.GET, entity, String.class);
 
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-//        String expected = "[{\"id\":0,\"title\":\"Spring Boot - Spring Data JPA with Hibernate and H2 Web Console\",\"shortText\":\"Curret tecknologies are developed very fast. It difficult to controll all technologies\",\"fullText\":\"Spring Boot - Spring Data JPA with Hibernate and H2 Web Console\",\"comments\":[{\"id\":0,\"text\":\"good post, thanks\"},{\"id\":1,\"text\":\"отстой, братан, ну серьезно\"},{\"id\":2,\"text\":\"пойдет\"}]}]";
+//        String expected = "[{id:0,title:Spring Boot - Spring Data JPA with Hibernate and H2 Web Console,shortText:Curret tecknologies are developed very fast. It difficult to controll all technologies,fullText:Spring Boot - Spring Data JPA with Hibernate and H2 Web Console,comments:[{\"id\":0,\"text\":\"good post, thanks\"},{\"id\":1,\"text\":\"отстой, братан, ну серьезно\"},{\"id\":2,\"text\":\"пойдет\"}]}]";
 //
 //        JSONAssert.assertEquals(expected, response.getBody(), false);
     }

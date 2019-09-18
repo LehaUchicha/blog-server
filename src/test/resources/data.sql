@@ -1,8 +1,8 @@
 INSERT INTO roles (id, role_name, description) VALUES (1, 'STANDARD_USER', 'Standard User - Has no admin rights');
 INSERT INTO roles (id, role_name, description) VALUES (2, 'ADMIN_USER', 'Admin User - Has permission to perform admin tasks');
 
-INSERT INTO users (id, first_name, last_name, password, username) VALUES (1, 'a', 'a', 'a', 'a.a');
-INSERT INTO users (id, first_name, last_name, password, username) VALUES (2, 'b', 'b', 'a', 'b.b');
+INSERT INTO users (id, first_name, last_name, password, username) VALUES (1, 'a', 'a', '$2y$10$nXwM1FDj0LAjdHT5VTqK0.G38.4NuSjZno3qPGG82SNQe6RI20N32', 'a.a');
+INSERT INTO users (id, first_name, last_name, password, username) VALUES (2, 'b', 'b', '$2y$10$nXwM1FDj0LAjdHT5VTqK0.G38.4NuSjZno3qPGG82SNQe6RI20N32', 'b.b');
 
 INSERT INTO user_role(user_id, role_id) VALUES(1,1);
 INSERT INTO user_role(user_id, role_id) VALUES(2,1);

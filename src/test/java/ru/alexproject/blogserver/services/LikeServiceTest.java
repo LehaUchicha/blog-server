@@ -1,7 +1,6 @@
 package ru.alexproject.blogserver.services;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.alexproject.blogserver.BaseTest;
 import ru.alexproject.blogserver.model.domain.Comment;
@@ -11,7 +10,6 @@ import ru.alexproject.blogserver.model.dto.CommentDto;
 import ru.alexproject.blogserver.model.dto.PostDto;
 import ru.alexproject.blogserver.model.dto.UserDto;
 
-@Ignore
 public class LikeServiceTest extends BaseTest {
 
     @Test

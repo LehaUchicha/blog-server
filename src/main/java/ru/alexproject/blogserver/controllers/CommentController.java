@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.domain.Comment;
@@ -41,23 +42,20 @@ public class CommentController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void createComment(@RequestBody CommentDto comment) {
         commentService.save(modelMapper.convert(comment, Comment.class));
     }
 
     @PutMapping(value = ID)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void updateComment(@PathVariable("id") Long id, @RequestBody CommentDto commentDto) {
         commentService.updateComment(id, modelMapper.convert(commentDto, Comment.class));
     }
 
     @DeleteMapping(value = ID)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void deleteComment(@PathVariable("id") Long id) {
         commentService.deleteComment(id);
-    }
-
-    public List<CommentDto> getCommentsByPostId(Long id) {
-        return commentService.getComments().stream()
-                .map(comment -> modelMapper.convert(comment, CommentDto.class))
-                .collect(Collectors.toList());
     }
 }

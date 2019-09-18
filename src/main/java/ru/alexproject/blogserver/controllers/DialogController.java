@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.dto.DialogDto;
@@ -30,6 +31,7 @@ public class DialogController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public List<UserDialogDto> getAllDialogs() {
         return dialogService.getAllDialogs().stream()
                 .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
@@ -37,6 +39,7 @@ public class DialogController {
     }
 
     @GetMapping(value = DIALOG_ID)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Set<UserDialogDto> getDialogById(@PathVariable("id") Long id) {
         return dialogService.getDialogById(id).stream()
                 .map(userDialog -> modelMapper.convert(userDialog, UserDialogDto.class))
@@ -44,6 +47,7 @@ public class DialogController {
     }
 
     @GetMapping(value = USER_DIALOGS)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Set<DialogDto> getAllDialogsForUser(@PathVariable("id") Long id) {
         return dialogService.getAllDialogsForUser(id).stream()
                 .map(dialog -> modelMapper.convert(dialog, DialogDto.class))
@@ -51,6 +55,7 @@ public class DialogController {
     }
 
     @GetMapping(value = USERS_FOR_DIALOG)
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public Set<UserDto> getAllUsersForDialog(@PathVariable("id") Long id) {
         return dialogService.getAllUsersForDialog(id).stream()
                 .map(user -> modelMapper.convert(user, UserDto.class))

@@ -1,6 +1,7 @@
 package ru.alexproject.blogserver.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.alexproject.blogserver.mapper.Mapper;
 import ru.alexproject.blogserver.model.domain.Post;
@@ -67,11 +68,13 @@ public class LikeController {
     }
 
     @PostMapping(value = "/increase")
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void increasePostLikeCount(@RequestBody UserDto user, @RequestBody PostDto post) {
         likeService.increasePostLikeCount(modelMapper.convert(user, User.class), modelMapper.convert(post, Post.class));
     }
 
     @PostMapping(value = "/decrease")
+    @PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER')")
     public void decreasePostLikeCount(@RequestBody UserDto user, @RequestBody PostDto post) {
         likeService.decreasePostLikeCount(modelMapper.convert(user, User.class), modelMapper.convert(post, Post.class));
     }
