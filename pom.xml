@@ -165,6 +165,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>ru.alexproject.blogserver.BlogServerApplication</mainClass>
                     <classifier>exec</classifier>
                 </configuration>
             </plugin>

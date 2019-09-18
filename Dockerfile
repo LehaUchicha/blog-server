@@ -1,8 +1,9 @@
 FROM maven:3.6.2-jdk-8
 ENV application_dir /usr/app
 WORKDIR ${application_dir}
-COPY ./ ./
+COPY ./pom.xml ./
 RUN mvn clean install -DskipTests=true
-ADD /root/.m2/repository/ru/alexproject/blog-server/0.0.1-SNAPSHOT/blog-server-0.0.1-SNAPSHOT-exec.jar ${application_dir}/target/app.jar
+COPY ./ ./
+#ADD /root/.m2/repository/ru/alexproject/blog-server/0.0.1-SNAPSHOT/blog-server-0.0.1-SNAPSHOT-exec.jar ${application_dir}/target/app.jar
 EXPOSE 8090
-CMD ["java", "-jar", "app.jar"]
+CMD ["mvn", "spring-boot:run"]
